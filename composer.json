@@ -1,0 +1,10 @@
+{
+    "name": "supernova/at-rest-filter",
+    "description": "filter",
+    "autoload": {
+        "psr-4": {
+            "Supernova\\AtRestFilter\\": "src/"
+        }
+    },
+    "require": {}
+}
