@@ -16,3 +16,4 @@ require_once AT_REST_FILTER_DIR . '/vendor/autoload.php';
 
 
 new \Supernova\AtRestFilter\Shortcodes\FilterForm();
+new \Supernova\AtRestFilter\Shortcodes\DeathNoticeListining();
