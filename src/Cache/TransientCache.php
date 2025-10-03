@@ -7,7 +7,7 @@ class TransientCache implements \Supernova\AtRestFilter\Cache\CacheInterface {
 
     private $cache_prefix = '';
 
-    private $active = true;
+    private $active = false;
 
     public function __construct($prefix = 'at-rest-filter-') {
         $this->cache_prefix = $prefix;

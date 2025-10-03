@@ -32,10 +32,13 @@ class County {
     }
 
     private function getDatabasePostIds() : array {
-        $query = new WP_Query([
+        $query = new \WP_Query([
             'post_type'      => 'database',
             'posts_per_page' => -1,
-            'fields'         => 'ids'
+            'fields'         => 'ids',
+            'post_status'    => 'publish',
+            'orderby'        => 'title',
+            'order'          => 'ASC',
         ]);
         
         return $query->posts;
