@@ -1,0 +1,85 @@
+.facetwp-pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.custom-pagination {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 4px;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: #f5f5f5;
+    border-color: #999;
+}
+
+.loop-table .pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed !important;
+    background: #f9f9f9;
+    border-color: #e5e5e5;
+    color: #ccc;
+}
+
+.pagination-btn:disabled svg {
+    opacity: 0.3;
+}
+
+.pagination-numbers {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.pagination-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.pagination-number:hover {
+    background: #f5f5f5;
+    border-color: #999;
+}
+
+.pagination-number.active {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination-dots {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0.5rem;
+    color: #666;
+}

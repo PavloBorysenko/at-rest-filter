@@ -22,7 +22,7 @@ class DeathNoticeListining {
     public function render_shortcode($atts = []) {
         $atts = shortcode_atts([
             'per_page' => 6,
-            'orderby' => 'post_date',
+            'orderby' => 'date',
             'order' => 'desc',
         ], $atts);
         $per_page = $this->search->get('per-page') ?? $atts['per_page'];
@@ -48,8 +48,11 @@ class DeathNoticeListining {
        // wp_enqueue_style('choices-css', 'https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/styles/choices.min.css', array(), '10.2.0');
        // wp_enqueue_script('choices-js', 'https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/scripts/choices.min.js', array(), '10.2.0', true);
         
+        // Enqueue pagination CSS
+        wp_enqueue_style('at-rest-pagination-css', AT_REST_FILTER_URL . 'css/pagination.css', array(), '1.0.1');
+        
         // Enqueue our custom script with Choices.js as dependency
-        wp_enqueue_script('at-rest-death-notice-listing-js', AT_REST_FILTER_URL . 'js/death-notice-listing.js', array(), '1.0.1', true);
+        wp_enqueue_script('at-rest-death-notice-listing-js', AT_REST_FILTER_URL . 'js/death-notice-listing.js', array(), '1.0.6', true);
     }
 }
 
