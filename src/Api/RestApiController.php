@@ -75,7 +75,7 @@ class RestApiController
 			),
 			'per_page'  => array(
 				'type'              => 'integer',
-				'default'           => 10,
+				'default'           => 6,
 				'sanitize_callback' => 'absint',
 			),
 			'orderby'   => array(

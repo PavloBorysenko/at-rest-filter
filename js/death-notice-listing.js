@@ -1,4 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('Death notice listing script loaded');
+    console.log(
+        'TemplateRenderer available:',
+        typeof TemplateRenderer !== 'undefined'
+    );
+
+    if (typeof TemplateRenderer === 'undefined') {
+        console.error(
+            'TemplateRenderer is not loaded. Check if template-renderer.js is properly enqueued.'
+        );
+        return;
+    }
+
+    const renderer = new TemplateRenderer();
+    console.log('TemplateRenderer initialized successfully');
     const perPageSelect = document.getElementById('per-page-select');
     const sortButtons = document.querySelectorAll('.sort-button');
 
@@ -23,6 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Total posts:', data.pagination?.total);
             console.log('Posts:', data.posts);
 
+            if (data.posts) {
+                renderPosts(data.posts);
+            }
+
             if (data.pagination) {
                 renderPagination(data.pagination);
             }
@@ -31,6 +50,65 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             console.error('Error fetching posts:', error);
             return null;
+        }
+    };
+
+    const renderPosts = (posts) => {
+        const container = document.querySelector('.funeral-homes-table__body');
+        const template = document.getElementById(
+            'death-notice-list-template'
+        )?.innerHTML;
+
+        if (!container || !template) {
+            console.error('Container or template not found');
+            return;
+        }
+
+        if (posts.length === 0) {
+            showEmptyState();
+            return;
+        }
+
+        hideEmptyStates();
+        container.innerHTML = posts
+            .map((post) => renderer.render(template, post))
+            .join('');
+
+        // Initialize tippy for dynamically created elements
+        initTippy();
+    };
+
+    const showEmptyState = () => {
+        const container = document.querySelector('.funeral-homes-table__body');
+        const emptyState = document.querySelector('.is--empty-state');
+
+        if (container) {
+            container.innerHTML = '';
+        }
+
+        if (emptyState) {
+            emptyState.style.display = 'block';
+        }
+    };
+
+    const hideEmptyStates = () => {
+        const emptyStates = document.querySelectorAll(
+            '.is--empty-state, .is--empty-state-empty'
+        );
+        emptyStates.forEach((state) => {
+            state.style.display = 'none';
+        });
+    };
+
+    const initTippy = () => {
+        // Check if tippy is available
+        if (typeof tippy !== 'undefined') {
+            // Destroy existing tippy instances
+            tippy('[data-tippy-content]', {
+                allowHTML: true,
+                placement: 'top',
+                theme: 'light',
+            });
         }
     };
 
@@ -216,6 +294,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     fetchPosts();
     setupPaginationButtons();
+    initTippy();
 
     window.addEventListener('filterUpdate', () => {
         fetchPosts();

@@ -2,7 +2,6 @@
 <div class="at-rest-death-notice-listing loop-table sort">
     <div class="funeral-homes-table facetwp-facet facetwp-facet-sort_table facetwp-type-sort family-notices-table">
         <div class="funeral-homes-table__header facetwp-sort-radio">
-            <div class="funeral-homes-table__cell" style="display: none; width: 0;"></div>
             <div class="funeral-homes-table__cell column-name">
                 <button class="sort-button" 
                     data-sort="name" 
@@ -75,46 +74,43 @@
         </div>
     </div>
 </div>
-<div class='at-rest-death-notice-item-template' style='display:none;'>
-    <div class="funeral-homes-table__row __HAS-ADDRESSES__" >
-        <a  aria-atomic=""href="__POST_LINK__"
-            class="funeral-homes-table__cell column-name death-notice__link __WITH-ICON__">
+<script type="text/template" id="death-notice-list-template">
+    <div class="funeral-homes-table__row {{#if additional_address_county}}has-addresses{{/if}}">
+        <a href="{{link}}" 
+           class="funeral-homes-table__cell column-name death-notice__link {{#if icon}}with-icon{{/if}}">
             <div class="death-notice__name">
-                __POST_IMAGE__
-                <span class="status">__POST_STATUS__<span>
-                <span>
-                    __POST_TITLE__
-                </span>
+                {{image image thumbnail}}
+                <span>{{title}}</span>
             </div>
-            __POST_ICON__
+            {{#if icon}}{{icon icon}}{{/if}}
         </a>
+        
         <div class="funeral-homes-table__cell column-county">
-            <div class="list-item">
-                __COUNTY__
-            </div>
-            <div class="list-item">
-                __EXTRA_COUNTY__
-            </div>
-
+            <div class="list-item">{{empty county}}</div>
+            {{#each additional_address_county}}
+            <div class="list-item">{{empty this}}</div>
+            {{/each}}
         </div>
+        
         <div class="funeral-homes-table__cell column-town">
-            <div class="list-item">
-                __TOWN__
-            </div>
-            <div class="list-item">
-                __EXTRA_TOWN__
-            </div>
+            <div class="list-item">{{empty town}}</div>
+            {{#each additional_address_town}}
+            <div class="list-item">{{empty this}}</div>
+            {{/each}}
         </div>
-        <div class="funeral-homes-table__cell column-date is--date">
-            <span class="date--list">
-                __DATA_DATE__
-            </span>
-            <span class="date--grid">
-                __POST_DATE__
-            </span>
+        
+        <div class="funeral-homes-table__cell is--date">
+            <span class="date--list">{{date publish_date}}</span>
+            <span class="date--grid">{{date publish_date long}}</span>
+        </div>
+        
+        <div class="funeral-homes-table__cell is--residence">
+            <ul>
+                <li>{{empty town}}, {{empty county}}</li>
+            </ul>
         </div>
     </div>
-</div>
+</script>
 
   <div class="is--empty-state" style="display:none;">
       <?php echo do_shortcode('[breakdance_block blockId=4755]'); ?>
@@ -122,3 +118,4 @@
   <div class="is--empty-state-empty" style="display:none;">
       <?php echo do_shortcode('[breakdance_block blockId=4751]'); ?>
   </div>
+

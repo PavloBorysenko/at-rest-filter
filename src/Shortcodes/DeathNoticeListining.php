@@ -51,8 +51,17 @@ class DeathNoticeListining {
         // Enqueue pagination CSS
         wp_enqueue_style('at-rest-pagination-css', AT_REST_FILTER_URL . 'css/pagination.css', array(), '1.0.1');
         
-        // Enqueue our custom script with Choices.js as dependency
-        wp_enqueue_script('at-rest-death-notice-listing-js', AT_REST_FILTER_URL . 'js/death-notice-listing.js', array(), '1.0.6', true);
+        // Enqueue our custom scripts with proper dependencies
+        $template_renderer_url = AT_REST_FILTER_URL . 'js/template-renderer.js';
+        $listing_js_url = AT_REST_FILTER_URL . 'js/death-notice-listing.js';
+        
+        // Debug: log the URLs to check if they're correct
+        error_log('Template Renderer URL: ' . $template_renderer_url);
+        error_log('Listing JS URL: ' . $listing_js_url);
+        
+        wp_enqueue_script('at-rest-template-renderer-js', $template_renderer_url, array(), '1.0.3', true);
+        wp_enqueue_script('at-rest-death-notice-listing-js', $listing_js_url, array('at-rest-template-renderer-js'), '1.0.10', true);
+       
     }
 }
 

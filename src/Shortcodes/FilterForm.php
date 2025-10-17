@@ -33,6 +33,7 @@ class FilterForm {
         $atts = shortcode_atts([
             'post_type' => 'death-notices',
         ], $atts);
+        $this->dequeueFilterJs();
         $this->initJs();
 
         $counties_data = $this->county_data->getCountiesData();
@@ -42,6 +43,10 @@ class FilterForm {
         return ob_get_clean();
     }
 
+    private function dequeueFilterJs() {
+        wp_dequeue_script('filter-js');
+        wp_deregister_script('filter-js');
+    }
     private function initJs() {
         wp_enqueue_style('flatpickr-css', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css', array(), '4.6.13');
         wp_enqueue_script('flatpickr-js', 'https://cdn.jsdelivr.net/npm/flatpickr', array(), '4.6.13', true);
