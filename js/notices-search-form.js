@@ -2,6 +2,13 @@
     const form = document.querySelector('.filters__form');
     if (!form) return;
 
+    if (typeof URLManager === 'undefined') {
+        console.error('URLManager is not loaded');
+        return;
+    }
+
+    const urlManager = new URLManager();
+
     const fields = Array.from(form.elements)
         .filter((el) => el.name && el.type !== 'button')
         .map((el) => el.name);
@@ -17,21 +24,26 @@
     const datePickers = {};
 
     const updateURL = () => {
-        const url = new URL(window.location);
-        const params = url.searchParams;
+        const params = { pg: null };
 
-        fields.forEach((field) => params.delete(field));
-        params.delete('search_type');
+        fields.forEach((field) => {
+            params[field] = null;
+        });
+        params.search_type = null;
 
         const formData = new FormData(form);
         formData.forEach((value, key) => {
-            if (value.trim()) params.set(key, value.trim());
+            if (value.trim()) {
+                params[key] = value.trim();
+            }
         });
 
         const searchType = form.dataset.searchType;
-        if (searchType) params.set('search_type', searchType);
+        if (searchType) {
+            params.search_type = searchType;
+        }
 
-        window.history.pushState({}, '', url);
+        urlManager.set(params, { silent: true });
         window.dispatchEvent(new CustomEvent('filterUpdate'));
     };
 
@@ -55,10 +67,12 @@
     };
 
     const clearURLParams = () => {
-        const url = new URL(window.location);
-        fields.forEach((field) => url.searchParams.delete(field));
-        url.searchParams.delete('search_type');
-        window.history.pushState({}, '', url);
+        const params = { pg: null };
+        fields.forEach((field) => {
+            params[field] = null;
+        });
+        params.search_type = null;
+        urlManager.set(params, { silent: true });
     };
 
     const clearForm = () => {
