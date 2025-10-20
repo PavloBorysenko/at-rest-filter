@@ -1,5 +1,14 @@
 
 <div class="at-rest-death-notice-listing loop-table sort">
+    <div class="at-rest-loading-overlay" >
+        <div class="at-rest-loading-spinner">
+            <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="25" cy="25" r="20" fill="none" stroke="#1e1e1e" stroke-width="4" stroke-linecap="round" stroke-dasharray="31.415 31.415" transform="rotate(-90 25 25)">
+                    <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1.5s" repeatCount="indefinite"/>
+                </circle>
+            </svg>
+        </div>
+    </div>
     <div class="funeral-homes-table facetwp-facet facetwp-facet-sort_table facetwp-type-sort family-notices-table">
         <div class="funeral-homes-table__header facetwp-sort-radio">
             <div class="funeral-homes-table__cell column-name">
@@ -73,6 +82,12 @@
           </button>
         </div>
     </div>
+    <div class="is--empty-state" style="display:none;">
+      <?php echo do_shortcode('[breakdance_block blockId=4755]'); ?>
+    </div>
+    <div class="is--empty-state-empty" style="display:none;">
+        <?php echo do_shortcode('[breakdance_block blockId=4751]'); ?>
+    </div>    
 </div>
 <script type="text/template" id="death-notice-list-template">
     <div class="funeral-homes-table__row {{#if additional_address_county}}has-addresses{{/if}}">
@@ -112,10 +127,5 @@
     </div>
 </script>
 
-  <div class="is--empty-state" style="display:none;">
-      <?php echo do_shortcode('[breakdance_block blockId=4755]'); ?>
-  </div>
-  <div class="is--empty-state-empty" style="display:none;">
-      <?php echo do_shortcode('[breakdance_block blockId=4751]'); ?>
-  </div>
+
 

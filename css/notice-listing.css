@@ -82,3 +82,49 @@
     padding: 0.5rem;
     color: #666;
 }
+
+/* Loading Overlay */
+.at-rest-death-notice-listing {
+    position: relative;
+}
+
+.at-rest-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: opacity 0.2s ease;
+}
+
+.at-rest-loading-overlay.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.at-rest-loading-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.at-rest-loading-spinner svg {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
