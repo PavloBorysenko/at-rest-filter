@@ -47,7 +47,6 @@ class TemplateRenderer {
     render(template, data) {
         let result = template;
 
-        // Обработка условных блоков {{#if condition}}...{{/if}}
         result = result.replace(
             /\{\{#if\s+([^}]+)\}\}([\s\S]*?)\{\{\/if\}\}/g,
             (match, condition, content) => {
@@ -56,7 +55,6 @@ class TemplateRenderer {
             }
         );
 
-        // Обработка циклов {{#each array}}...{{/each}}
         result = result.replace(
             /\{\{#each\s+([^}]+)\}\}([\s\S]*?)\{\{\/each\}\}/g,
             (match, arrayPath, content) => {
@@ -76,7 +74,6 @@ class TemplateRenderer {
             }
         );
 
-        // Обработка хелперов {{helper arg1 arg2}}
         result = result.replace(
             /\{\{(\w+)\s+([^}]+)\}\}/g,
             (match, helper, args) => {
@@ -90,7 +87,6 @@ class TemplateRenderer {
             }
         );
 
-        // Обработка простых плейсхолдеров {{field}}
         result = result.replace(/\{\{([^#\/][^}]*)\}\}/g, (match, key) => {
             return this.getValue(data, key.trim()) || '';
         });

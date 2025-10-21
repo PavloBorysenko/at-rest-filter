@@ -36,7 +36,7 @@ class DeathNoticeFilter extends AbstractPostFilter
 
 		if ( ! empty( $params['firstname'] ) ) {
 			$metaQuery[] = array(
-				'key'     => 'firstname',
+				'key'     => 'name',
 				'value'   => $params['firstname'],
 				'compare' => 'LIKE',
 			);
@@ -59,36 +59,59 @@ class DeathNoticeFilter extends AbstractPostFilter
 		}
 
 		if ( ! empty( $params['county'] ) ) {
-			$metaQuery[] = array(
-				'key'     => 'select-county',
-				'value'   => $params['county'],
-				'compare' => '=',
+			$countyQuery = array(
+				'relation' => 'OR',
+				array(
+					'key'     => 'select-county',
+					'value'   => $params['county'],
+					'compare' => '=',
+				),
 			);
+			
+			for ( $i = 0; $i < 3; $i++ ) {
+				$countyQuery[] = array(
+					'key'     => "additional_address_{$i}_additional_address_county",
+					'value'   => $params['county'],
+					'compare' => '=',
+				);
+			}
+			
+			$metaQuery[] = $countyQuery;
 		}
 
 		if ( ! empty( $params['town'] ) ) {
-			$metaQuery[] = array(
-				'key'     => 'select-town',
-				'value'   => $params['town'],
-				'compare' => '=',
+			$townQuery = array(
+				'relation' => 'OR',
+				array(
+					'key'     => 'select-town',
+					'value'   => $params['town'],
+					'compare' => '=',
+				),
 			);
+			
+			for ( $i = 0; $i < 3; $i++ ) {
+				$townQuery[] = array(
+					'key'     => "additional_address_{$i}_additional_address_town",
+					'value'   => $params['town'],
+					'compare' => '=',
+				);
+			}
+			
+			$metaQuery[] = $townQuery;
 		}
 
+
 		if ( ! empty( $params['from'] ) ) {
-			$metaQuery[] = array(
-				'key'     => 'funeral_date',
-				'value'   => $this->convertDateToYmd( $params['from'] ),
-				'compare' => '>=',
-				'type'    => 'DATE',
+			$args['date_query'][] = array(
+				'after'     => $this->convertDateToYmd( $params['from'] ),
+				'inclusive' => true,
 			);
 		}
 
 		if ( ! empty( $params['to'] ) ) {
-			$metaQuery[] = array(
-				'key'     => 'funeral_date',
-				'value'   => $this->convertDateToYmd( $params['to'] ),
-				'compare' => '<=',
-				'type'    => 'DATE',
+			$args['date_query'][] = array(
+				'before'    => $this->convertDateToYmd( $params['to'] ),
+				'inclusive' => true,
 			);
 		}
 

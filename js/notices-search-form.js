@@ -22,6 +22,94 @@
     );
 
     const datePickers = {};
+    let countyChoices = null;
+    let townChoices = null;
+
+    const initCountyChoices = () => {
+        if (typeof Choices === 'undefined' || !countySelect) return;
+
+        countyChoices = new Choices(countySelect, {
+            placeholder: true,
+            placeholderValue: 'County',
+            searchPlaceholderValue: 'Search',
+            searchEnabled: true,
+            shouldSort: true,
+            itemSelectText: '',
+            position: 'bottom',
+            fuseOptions: {
+                threshold: 0,
+                keys: ['label', 'value'],
+            },
+            searchFields: ['label', 'value'],
+        });
+
+        countySelect.addEventListener('change', function () {
+            const selectedCounty = this.value;
+            handleCountyChange(selectedCounty);
+        });
+    };
+
+    const initTownChoices = () => {
+        if (typeof Choices === 'undefined' || !townSelect) return;
+
+        townChoices = new Choices(townSelect, {
+            placeholder: true,
+            placeholderValue: 'Town',
+            searchPlaceholderValue: 'Search',
+            searchEnabled: true,
+            shouldSort: true,
+            itemSelectText: '',
+            position: 'bottom',
+            fuseOptions: {
+                threshold: 0,
+                keys: ['label', 'value'],
+            },
+            searchFields: ['label', 'value'],
+        });
+
+        townSelect.addEventListener('change', function () {
+            const resetBtn = document.getElementById('reset_town');
+            if (resetBtn) toggleResetBtn(townSelect, resetBtn);
+            toggleClearAllBtn();
+        });
+    };
+
+    const handleCountyChange = (selectedCounty) => {
+        if (selectedCounty && countiesData[selectedCounty]) {
+            const townOptions = [
+                { value: '', label: 'Town' },
+                ...countiesData[selectedCounty].map((town) => ({
+                    value: town,
+                    label: town,
+                })),
+            ];
+
+            if (townChoices) {
+                townChoices.setChoices(townOptions, 'value', 'label', true);
+                townChoices.removeActiveItems();
+                townChoices.enable();
+                townSelect.disabled = false;
+            }
+        } else {
+            if (townChoices) {
+                townChoices.setChoices(
+                    [{ value: '', label: 'Town' }],
+                    'value',
+                    'label',
+                    true
+                );
+                townChoices.disable();
+                townSelect.disabled = true;
+            }
+        }
+
+        const resetTownBtn = document.getElementById('reset_town');
+        if (resetTownBtn) resetTownBtn.style.display = 'none';
+
+        const resetCountyBtn = document.getElementById('reset_county');
+        if (resetCountyBtn) toggleResetBtn(countySelect, resetCountyBtn);
+        toggleClearAllBtn();
+    };
 
     const updateURL = () => {
         const params = { pg: null };
@@ -48,10 +136,22 @@
     };
 
     const toggleResetBtn = (input, resetBtn) => {
-        const hasValue =
-            input.tagName === 'SELECT'
-                ? input.value && input.selectedIndex > 0
-                : input.value.trim();
+        let hasValue = false;
+
+        if (input.tagName === 'SELECT') {
+            if (countyChoices && input === countySelect) {
+                const value = countyChoices.getValue(true);
+                hasValue = value && value.length > 0;
+            } else if (townChoices && input === townSelect) {
+                const value = townChoices.getValue(true);
+                hasValue = value && value.length > 0;
+            } else {
+                hasValue = input.value && input.selectedIndex > 0;
+            }
+        } else {
+            hasValue = input.value.trim();
+        }
+
         resetBtn.style.display = hasValue ? 'block' : 'none';
     };
 
@@ -59,9 +159,18 @@
         const hasAnyValue = fields.some((fieldName) => {
             const field = document.getElementById(`filter-${fieldName}`);
             if (!field) return false;
-            return field.tagName === 'SELECT'
-                ? field.value && field.selectedIndex > 0
-                : field.value.trim();
+
+            if (fieldName === 'county' && countyChoices) {
+                const value = countyChoices.getValue(true);
+                return value && value.length > 0;
+            } else if (fieldName === 'town' && townChoices) {
+                const value = townChoices.getValue(true);
+                return value && value.length > 0;
+            } else if (field.tagName === 'SELECT') {
+                return field.value && field.selectedIndex > 0;
+            } else {
+                return field.value.trim();
+            }
         });
         clearBtn.style.display = hasAnyValue ? 'block' : 'none';
     };
@@ -84,8 +193,19 @@
             }
         });
 
-        countySelect.selectedIndex = 0;
-        townSelect.selectedIndex = 0;
+        if (countyChoices) {
+            countyChoices.removeActiveItems();
+        }
+        if (townChoices) {
+            townChoices.removeActiveItems();
+            townChoices.setChoices(
+                [{ value: '', label: 'Town' }],
+                'value',
+                'label',
+                true
+            );
+            townChoices.disable();
+        }
         townSelect.disabled = true;
 
         Object.values(datePickers).forEach((picker) => picker?.clear());
@@ -99,7 +219,18 @@
         const field = document.getElementById(`filter-${fieldId}`);
         const resetBtn = document.getElementById(`reset_${fieldId}`);
 
-        if (field.tagName === 'SELECT') {
+        if (fieldId === 'county' && countyChoices) {
+            countyChoices.removeActiveItems();
+            if (townChoices) {
+                townChoices.removeActiveItems();
+                townChoices.disable();
+            }
+            townSelect.disabled = true;
+            const resetTownBtn = document.getElementById('reset_town');
+            if (resetTownBtn) resetTownBtn.style.display = 'none';
+        } else if (fieldId === 'town' && townChoices) {
+            townChoices.removeActiveItems();
+        } else if (field.tagName === 'SELECT') {
             field.selectedIndex = 0;
             if (fieldId === 'county') {
                 townSelect.selectedIndex = 0;
@@ -114,6 +245,7 @@
             }
         }
         resetBtn.style.display = 'none';
+        toggleClearAllBtn();
     };
 
     fields.forEach((fieldName) => {
@@ -137,8 +269,8 @@
         if (typeof flatpickr === 'undefined') return;
 
         const today = new Date();
-        const fromInput = document.getElementById('filter-date-from');
-        const toInput = document.getElementById('filter-date-to');
+        const fromInput = document.getElementById('filter-from');
+        const toInput = document.getElementById('filter-to');
 
         if (!fromInput || !toInput) return;
 
@@ -177,41 +309,82 @@
         });
     };
 
-    const initForm = () => {
-        if (countySelect.value) {
-            townSelect.disabled = false;
-        }
+    const restoreFormFromURL = () => {
+        const urlParams = new URLSearchParams(window.location.search);
 
         fields.forEach((fieldName) => {
+            const value = urlParams.get(fieldName);
             const field = document.getElementById(`filter-${fieldName}`);
             const resetBtn = document.getElementById(`reset_${fieldName}`);
-            if (field && resetBtn) {
-                toggleResetBtn(field, resetBtn);
+
+            if (field && value) {
+                if (fieldName === 'county' && countyChoices) {
+                    countyChoices.setChoiceByValue(value);
+                    handleCountyChange(value);
+
+                    const townValue = urlParams.get('town');
+                    if (townValue && townChoices) {
+                        setTimeout(() => {
+                            townChoices.setChoiceByValue(townValue);
+                            if (resetBtn) toggleResetBtn(field, resetBtn);
+                        }, 100);
+                    }
+                } else if (fieldName === 'town' && townChoices) {
+                    setTimeout(() => {
+                        townChoices.setChoiceByValue(value);
+                        if (resetBtn) toggleResetBtn(field, resetBtn);
+                    }, 100);
+                } else if (field.tagName === 'SELECT') {
+                    field.value = value;
+                    if (fieldName === 'county') {
+                        const county = value;
+                        townSelect.innerHTML =
+                            '<option value="" disabled selected>Town</option>';
+
+                        if (county && countiesData[county]) {
+                            countiesData[county].forEach((town) => {
+                                townSelect.innerHTML += `<option value="${town}">${town}</option>`;
+                            });
+                            townSelect.disabled = false;
+                        }
+                        const townValue = urlParams.get('town');
+                        if (townValue) {
+                            townSelect.value = townValue;
+                        }
+                    }
+                } else if (fieldName === 'from' || fieldName === 'to') {
+                    setTimeout(() => {
+                        if (datePickers[fieldName]) {
+                            const datePicker = datePickers[fieldName];
+                            const date = new Date(
+                                value.split('.').reverse().join('-')
+                            );
+                            if (resetBtn) {
+                                toggleResetBtn(field, resetBtn);
+                            }
+                            datePicker.setDate(date);
+                        }
+                    }, 100);
+                } else {
+                    field.value = value;
+                    if (resetBtn) {
+                        toggleResetBtn(field, resetBtn);
+                    }
+                }
             }
         });
 
-        initDatePickers();
+        toggleClearAllBtn();
     };
 
-    toggleClearAllBtn();
-    initForm();
+    initCountyChoices();
+    initTownChoices();
+    initDatePickers();
 
-    countySelect.addEventListener('change', (e) => {
-        const county = e.target.value;
-        townSelect.innerHTML =
-            '<option value="" disabled selected>Town</option>';
-
-        if (county && countiesData[county]) {
-            countiesData[county].forEach((town) => {
-                townSelect.innerHTML += `<option value="${town}">${town}</option>`;
-            });
-            townSelect.disabled = false;
-        } else {
-            townSelect.disabled = true;
-        }
-        townSelect.selectedIndex = 0;
-        document.getElementById('reset_town').style.display = 'none';
-    });
+    setTimeout(() => {
+        restoreFormFromURL();
+        toggleClearAllBtn();
+    }, 200);
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();

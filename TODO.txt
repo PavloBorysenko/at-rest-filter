@@ -1,4 +1,3 @@
 
 
-
 fix tooltips on listings -  use another solucion then in funcions.php line 2281

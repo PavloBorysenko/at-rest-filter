@@ -63,7 +63,7 @@
         </div>
 
         <div class="form-user__field">
-            <select id="filter-town" name="town" disabled class="form-user__select">
+            <select id="filter-town" name="town" class="form-user__select">
             <option value="" disabled selected>Town</option>
             <?php 
             $selectedCounty = $search->get('county');
@@ -86,31 +86,21 @@
         <div class="form-user__field">
             <input  type="text" 
                     name="from" 
-                    id="filter-date-from" 
+                    id="filter-from" 
                     placeholder="From" 
                     class="form-user__input is--date" 
                     value="<?php echo esc_attr($search->get('from', '')); ?>"
             >
-            <button type="button" 
-                    class="form-user__reset-btn" 
-                    id="reset_from" 
-                    style="display: none;"
-            >×</button>
         </div>
 
         <div class="form-user__field">
             <input  type="text" 
                     name="to" 
-                    id="filter-date-to" 
+                    id="filter-to" 
                     placeholder="To" 
                     class="form-user__input is--date" 
                     value="<?php echo esc_attr($search->get('to', '')); ?>"
             >
-            <button type="button" 
-                    class="form-user__reset-btn" 
-                    id="reset_to" 
-                    style="display: none;"
-            >×</button>
         </div>
         <button type="submit" style="display: none;"></button>
     </form>
