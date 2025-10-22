@@ -233,6 +233,7 @@
             countyChoices.removeActiveItems();
             if (townChoices) {
                 townChoices.removeActiveItems();
+                townChoices.hideDropdown();
                 townChoices.disable();
             }
             townSelect.disabled = true;
