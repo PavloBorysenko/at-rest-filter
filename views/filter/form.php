@@ -114,8 +114,12 @@
             <span class="icon"></span> Clear All
         </button>
     </div>
-    <div class="at-rest-county-data" style="display: none;">
-        <?php echo wp_json_encode($counties_data); ?>
-    </div>
+    <script id="at-rest-county-data" type="application/json">
+        <?php echo wp_json_encode($counties_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>
+    </script>
+
+    <script id="at-rest-prefiltered-data" type="application/json">
+        <?php echo wp_json_encode($prefiltered_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>
+    </script>
 </div>
   

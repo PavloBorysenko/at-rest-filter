@@ -32,7 +32,10 @@ class FilterForm {
     public function render_form($atts = []) {
         $atts = shortcode_atts([
             'post_type' => 'death-notices',
+            'days' => 0,
         ], $atts);
+        $prefiltered_data = $this->setDays((int)$atts['days']);
+        $prefiltered_data['search_type'] = $atts['post_type'];
         $this->dequeueFilterJs();
         $this->initJs();
 
@@ -43,6 +46,19 @@ class FilterForm {
         return ob_get_clean();
     }
 
+    private function setDays( int$days) : array {
+        if ($days > 0) {
+            $today = current_time('d.m.Y');
+            $from_date = date('d.m.Y', strtotime("-{$days} days", strtotime($today)));
+            $to_date = $today;
+
+            return [
+                'from' => $from_date,
+                'to' => $to_date,
+            ];
+        }
+        return [];
+    }
     private function dequeueFilterJs() {
         wp_dequeue_script('filter-js');
         wp_deregister_script('filter-js');

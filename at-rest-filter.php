@@ -27,3 +27,4 @@ $restApi->register();
 // Initialize shortcodes
 new \Supernova\AtRestFilter\Shortcodes\FilterForm();
 new \Supernova\AtRestFilter\Shortcodes\DeathNoticeListining();
+new \Supernova\AtRestFilter\Shortcodes\ViewSelect();

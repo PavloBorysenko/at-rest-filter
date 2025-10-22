@@ -18,12 +18,22 @@
     const searchBtn = document.getElementById('search-button');
     const clearBtn = document.getElementById('clear-button');
     const countiesData = JSON.parse(
-        document.querySelector('.at-rest-county-data').textContent
+        document.getElementById('at-rest-county-data').textContent
+    );
+    const prefilteredData = JSON.parse(
+        document.getElementById('at-rest-prefiltered-data').textContent
     );
 
     const datePickers = {};
     let countyChoices = null;
     let townChoices = null;
+
+    const applyPrefilteredData = (filterData, urlManager) => {
+        if (urlManager.get('search_type')) {
+            return;
+        }
+        urlManager.set(filterData, { silent: true });
+    };
 
     const initCountyChoices = () => {
         if (typeof Choices === 'undefined' || !countySelect) return;
@@ -181,7 +191,7 @@
             params[field] = null;
         });
         params.search_type = null;
-        urlManager.set(params, { silent: true });
+        urlManager.set(params);
     };
 
     const clearForm = () => {
@@ -310,10 +320,10 @@
     };
 
     const restoreFormFromURL = () => {
-        const urlParams = new URLSearchParams(window.location.search);
+        const urlParams = urlManager.getAll();
 
         fields.forEach((fieldName) => {
-            const value = urlParams.get(fieldName);
+            const value = urlParams[fieldName];
             const field = document.getElementById(`filter-${fieldName}`);
             const resetBtn = document.getElementById(`reset_${fieldName}`);
 
@@ -322,7 +332,7 @@
                     countyChoices.setChoiceByValue(value);
                     handleCountyChange(value);
 
-                    const townValue = urlParams.get('town');
+                    const townValue = urlParams['town'];
                     if (townValue && townChoices) {
                         setTimeout(() => {
                             townChoices.setChoiceByValue(townValue);
@@ -347,7 +357,7 @@
                             });
                             townSelect.disabled = false;
                         }
-                        const townValue = urlParams.get('town');
+                        const townValue = urlParams['town'];
                         if (townValue) {
                             townSelect.value = townValue;
                         }
@@ -382,6 +392,7 @@
     initDatePickers();
 
     setTimeout(() => {
+        applyPrefilteredData(prefilteredData, urlManager);
         restoreFormFromURL();
         toggleClearAllBtn();
     }, 200);
