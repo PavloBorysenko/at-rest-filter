@@ -63,7 +63,7 @@
         </div>
 
         <div class="form-user__field">
-            <select id="filter-town" name="town" class="form-user__select">
+            <select id="filter-town" name="town" class="form-user__select" disabled>
             <option value="" disabled selected>Town</option>
             <?php 
             $selectedCounty = $search->get('county');

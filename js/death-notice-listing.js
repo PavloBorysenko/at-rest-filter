@@ -15,9 +15,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const renderer = new TemplateRenderer();
     console.log('TemplateRenderer initialized successfully');
 
+    const postType = document.querySelector('.at-rest-death-notice-listing')
+        ?.dataset.postType;
+    console.log(document.querySelector('.at-rest-death-notice-listing'));
+
     const urlManager = new URLManager({
         onUpdate: (params) => {
-            fetchPosts();
+            fetchPosts(postType);
         },
     });
 
@@ -39,11 +43,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    const fetchPosts = async () => {
+    const fetchPosts = async (postType) => {
         showLoading();
 
         const urlParams = new URLSearchParams(window.location.search);
-        const postType = 'death-notices';
         const searchType = urlParams.get('search_type');
         const apiParams = new URLSearchParams({
             post_type: postType,
@@ -66,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const response = await fetch(
                 `/wp-json/at-rest/v1/posts/filter?${apiParams}`
             );
+
             const data = await response.json();
 
             console.log('Posts data:', data);
@@ -73,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Posts:', data.posts);
 
             if (data.posts) {
-                renderPosts(data.posts);
+                renderPosts(data.posts, postType);
             }
 
             if (data.pagination) {
@@ -89,10 +93,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    const renderPosts = (posts) => {
+    const renderPosts = (posts, postType) => {
         const container = document.querySelector('.funeral-homes-table__body');
         const template = document.getElementById(
-            'death-notice-list-template'
+            `${postType}-list-template`
         )?.innerHTML;
 
         if (!container || !template) {
@@ -169,11 +173,11 @@ document.addEventListener('DOMContentLoaded', function () {
     perPageManager.init();
     sortManager.init();
 
-    fetchPosts();
+    fetchPosts(postType);
     initTippy();
 
     window.addEventListener('filterUpdate', () => {
         urlManager.delete('pg', { silent: true });
-        fetchPosts();
+        fetchPosts(postType);
     });
 });

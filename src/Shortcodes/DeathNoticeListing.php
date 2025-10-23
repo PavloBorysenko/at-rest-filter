@@ -3,11 +3,13 @@
 namespace Supernova\AtRestFilter\Shortcodes;
 
 use Supernova\AtRestFilter\Http\SearchRequest;
+use Supernova\AtRestFilter\Helper\Template;
+class DeathNoticeListing {
 
-class DeathNoticeListining {
-
-    private $search;
+    protected $search;
+    protected $templateHelper;
     public function __construct() {
+        $this->templateHelper = new Template();
         $this->search = new SearchRequest([
             'per-page' => 'int',
             'page' => 'int',
@@ -25,6 +27,7 @@ class DeathNoticeListining {
             'orderby' => 'date',
             'order' => 'desc',
         ], $atts);
+        $template_helper = $this->templateHelper;
         $per_page = $this->search->get('per-page') ?? $atts['per_page'];
         $orderby = $this->search->get('orderby') ?? $atts['orderby'];
         $order = $this->search->get('order') ?? $atts['order'];
@@ -42,7 +45,7 @@ class DeathNoticeListining {
         return ob_get_clean();
     }
 
-    private function initJs() {
+    protected function initJs() {
         // Enqueue Choices.js library (assuming it's already registered in WordPress)
         // If Choices.js is not registered, you need to register it first
        // wp_enqueue_style('choices-css', 'https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/styles/choices.min.css', array(), '10.2.0');

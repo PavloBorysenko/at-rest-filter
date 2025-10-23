@@ -18,7 +18,19 @@ class County {
         }
         $counties_data = $this->getCountiesDataFromDB();
         $this->cache->set('counties_data', $counties_data, DAY_IN_SECONDS);
-        return $this->getCountiesDataFromDB();
+        return $counties_data;
+    }
+    public function getCountiesOnly() : array {
+        $counties_data = $this->cache->get('counties_only');
+        if ($counties_data) {
+            return $counties_data;
+        }
+        $database_post_ids = $this->getDatabasePostIds();
+        foreach ($database_post_ids as $post_id) {
+            $counties_data[] = get_the_title($post_id);;
+        }
+        $this->cache->set('counties_only', $counties_data, DAY_IN_SECONDS);
+        return $counties_data;
     }
     private function getCountiesDataFromDB() : array {
         $counties_data = [];

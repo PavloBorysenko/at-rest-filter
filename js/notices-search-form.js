@@ -29,7 +29,12 @@
     let townChoices = null;
 
     const applyPrefilteredData = (filterData, urlManager) => {
-        if (urlManager.get('search_type')) {
+        if (
+            urlManager.get('search_type') ||
+            urlManager.get('pg') ||
+            urlManager.get('orderby') ||
+            urlManager.get('per-page')
+        ) {
             return;
         }
         urlManager.set(filterData, { silent: true });
@@ -182,7 +187,11 @@
                 return field.value.trim();
             }
         });
-        clearBtn.style.display = hasAnyValue ? 'block' : 'none';
+
+        const hasNoticeType = urlManager.get('search_type');
+
+        clearBtn.style.display =
+            hasAnyValue || hasNoticeType ? 'block' : 'none';
     };
 
     const clearURLParams = () => {
@@ -420,5 +429,9 @@
         if (e.detail?.source === form) return;
         clearForm();
         clearURLParams();
+    });
+
+    window.addEventListener('filterUpdate', () => {
+        toggleClearAllBtn();
     });
 })();
