@@ -30,4 +30,5 @@ new \Supernova\AtRestFilter\Shortcodes\DeathNoticeListing();
 new \Supernova\AtRestFilter\Shortcodes\FamilyNoticeListing();
 new \Supernova\AtRestFilter\Shortcodes\ViewSelect();
 new \Supernova\AtRestFilter\Shortcodes\TypeFilter();
+new \Supernova\AtRestFilter\Shortcodes\MapFilterForm();
 

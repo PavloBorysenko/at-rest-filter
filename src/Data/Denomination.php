@@ -17,7 +17,7 @@ class Denomination {
         }
         $denominations_data = $this->getDenominationsDataFromDB();
         $this->cache->set('denominations_data', $denominations_data, DAY_IN_SECONDS);
-        return $this->getDenominationsDataFromDB();
+        return $denominations_data;
     }
     private function getDenominationsDataFromDB() : array {
         global $wpdb;
