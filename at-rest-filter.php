@@ -20,6 +20,8 @@ $cache = new \Supernova\AtRestFilter\Cache\TransientCache();
 $filterService = new \Supernova\AtRestFilter\Api\PostFilterService($cache);
 $filterService->registerFilter('death-notices', \Supernova\AtRestFilter\Filters\DeathNoticeFilter::class);
 $filterService->registerFilter('family-notices', \Supernova\AtRestFilter\Filters\FamilyNoticeFilter::class);
+$filterService->registerFilter('map-location', \Supernova\AtRestFilter\Filters\MapLocationFilter::class);
+
 // Initialize REST API
 $restApi = new \Supernova\AtRestFilter\Api\RestApiController($filterService);
 $restApi->register();
@@ -30,5 +32,7 @@ new \Supernova\AtRestFilter\Shortcodes\DeathNoticeListing();
 new \Supernova\AtRestFilter\Shortcodes\FamilyNoticeListing();
 new \Supernova\AtRestFilter\Shortcodes\ViewSelect();
 new \Supernova\AtRestFilter\Shortcodes\TypeFilter();
+
 new \Supernova\AtRestFilter\Shortcodes\MapFilterForm();
+new \Supernova\AtRestFilter\Shortcodes\MapLocationListing();
 

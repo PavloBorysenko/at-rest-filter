@@ -471,7 +471,9 @@ body.is--grid-view
         color: #858b96 !important;
     }
 }
-.breakdance .loop-table .funeral-homes-table__cell {
+.breakdance
+    .loop-table[data-post-type='family-notices']
+    .funeral-homes-table__cell {
     width: 22% !important;
 }
 
@@ -505,4 +507,45 @@ body.is--grid-view
     .choices__list--dropdown
     .choices__item::before {
     display: none !important;
+}
+
+/* Map Location Listing */
+.breakdance
+    .at-rest-map-location-listing.loop-table
+    .funeral-homes-table__cell {
+    text-align: left !important;
+    justify-content: flex-start !important;
+}
+.breakdance
+    .at-rest-map-location-listing.loop-table
+    .funeral-homes-table__cell:nth-child(1) {
+    width: 4%;
+}
+.breakdance
+    .at-rest-map-location-listing.loop-table
+    .funeral-homes-table__cell:nth-child(2) {
+    width: 16%;
+}
+.breakdance
+    .at-rest-map-location-listing.loop-table
+    .funeral-homes-table__cell:nth-child(3) {
+    width: 24%;
+}
+.breakdance
+    .at-rest-map-location-listing.loop-table
+    .funeral-homes-table__cell:nth-child(4) {
+    width: 12.7%;
+}
+.breakdance
+    .at-rest-map-location-listing.loop-table
+    .funeral-homes-table__cell:nth-child(5),
+.breakdance
+    .at-rest-map-location-listing.loop-table
+    .funeral-homes-table__cell:nth-child(6) {
+    width: 12.7%;
+}
+.at-rest-map-location-listing.loop-table
+    .funeral-homes-table__cell:nth-child(7) {
+    width: 20%;
+    white-space: nowrap;
 }

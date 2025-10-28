@@ -10,14 +10,13 @@
     const searchBtn = document.getElementById('search-button');
     const clearBtn = document.getElementById('clear-button');
     const countySelect = document.getElementById('filter-county');
-    const denominationSelect = document.getElementById('filter-category');
+    const denominationSelect = document.getElementById('filter-denomination');
     const urlManager = new URLManager();
 
     const fields = Array.from(form.elements)
         .filter((el) => el.name && el.type !== 'button')
         .map((el) => el.name);
 
-    console.log(fields);
     let countyChoices = null;
     let denominationChoices = null;
 
@@ -67,7 +66,6 @@
 
     const toggleResetBtn = (input, resetBtn) => {
         let hasValue = false;
-
         if (input.tagName === 'SELECT') {
             if (countyChoices && input === countySelect) {
                 const value = countyChoices.getValue(true);
@@ -142,14 +140,9 @@
         if (fieldId === 'county' && countyChoices) {
             countyChoices.removeActiveItems();
         } else if (fieldId === 'denomination' && denominationChoices) {
-            townChoices.removeActiveItems();
+            denominationChoices.removeActiveItems();
         } else if (field.tagName === 'SELECT') {
             field.selectedIndex = 0;
-            if (fieldId === 'county') {
-                townSelect.selectedIndex = 0;
-                townSelect.disabled = true;
-                document.getElementById('reset_town').style.display = 'none';
-            }
         } else {
             field.value = '';
         }
@@ -160,7 +153,6 @@
     fields.forEach((fieldName) => {
         const field = document.getElementById(`filter-${fieldName}`);
         const resetBtn = document.getElementById(`reset_${fieldName}`);
-
         if (field && resetBtn) {
             const event = field.tagName === 'SELECT' ? 'change' : 'input';
             field.addEventListener(event, () => {
@@ -190,7 +182,7 @@
                     denominationChoices
                 ) {
                     setTimeout(() => {
-                        townChoices.setChoiceByValue(value);
+                        denominationChoices.setChoiceByValue(value);
                         if (resetBtn) toggleResetBtn(field, resetBtn);
                     }, 100);
                 } else {

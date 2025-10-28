@@ -15,9 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const renderer = new TemplateRenderer();
     console.log('TemplateRenderer initialized successfully');
 
-    const postType = document.querySelector('.at-rest-death-notice-listing')
-        ?.dataset.postType;
-    console.log(document.querySelector('.at-rest-death-notice-listing'));
+    const postType = document.querySelector('.at-rest-post-listing')?.dataset
+        .postType;
+    console.log(document.querySelector('.at-rest-post-listing'));
 
     const urlManager = new URLManager({
         onUpdate: (params) => {
@@ -48,7 +48,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const urlParams = new URLSearchParams(window.location.search);
         const searchType = urlParams.get('search_type');
+        const userId =
+            parseInt(
+                document.querySelector('.at-rest-post-listing')?.dataset.userId,
+                10
+            ) || 0;
         const apiParams = new URLSearchParams({
+            user_id: userId,
             post_type: postType,
             page: urlManager.get('pg') || '1',
             per_page: urlManager.get('per-page') || '6',
@@ -115,6 +121,16 @@ document.addEventListener('DOMContentLoaded', function () {
             .join('');
 
         initTippy();
+
+        window.dispatchEvent(
+            new CustomEvent('postsRendered', {
+                detail: {
+                    postType: postType,
+                    count: posts.length,
+                    posts: posts,
+                },
+            })
+        );
     };
 
     const showEmptyState = () => {
