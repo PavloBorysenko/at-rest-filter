@@ -2,7 +2,8 @@
 data-user-id="<?php echo esc_attr($user_id); ?>" 
 data-post-type="map-location">
     <?php $template_helper->drawSpinner(); ?>
-    <div class="funeral-homes-table facetwp-facet facetwp-facet-sort_table facetwp-type-sort">
+
+    <div class="funeral-homes-table facetwp-facet facetwp-facet-sort_table facetwp-type-sort family-notices-table">
         <div class="funeral-homes-table__header facetwp-sort-radio">
             <div class="funeral-homes-table__cell"></div>
             <div class="funeral-homes-table__cell">

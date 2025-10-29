@@ -62,7 +62,7 @@ class MapLocationListing {
         wp_enqueue_script('at-rest-per-page-manager-js', AT_REST_FILTER_URL . 'js/per-page-manager.js', array('at-rest-url-manager-js'), '1.0.2', true);
         wp_enqueue_script('at-rest-sort-manager-js', AT_REST_FILTER_URL . 'js/sort-manager.js', array('at-rest-url-manager-js'), '1.0.2', true);
 
-        wp_enqueue_script('at-rest-filter-map-location-listing', AT_REST_FILTER_URL . 'js/death-notice-listing.js', [
+        wp_enqueue_script('at-rest-filter-map-location-listing', AT_REST_FILTER_URL . 'js/post-listing.js', [
             'at-rest-template-renderer-js',
             'at-rest-url-manager-js',
             'at-rest-pagination-manager-js',

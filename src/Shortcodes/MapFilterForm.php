@@ -13,7 +13,7 @@ class MapFilterForm {
         $this->search = new SearchRequest([
             'denomination' => 'string',
             'county' => 'string',
-            'name' => 'string',
+            'church_name' => 'string',
         ]);
         $this->denomination_data = new Denomination();
         $this->county_data = new County();

@@ -53,9 +53,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.querySelector('.at-rest-post-listing')?.dataset.userId,
                 10
             ) || 0;
+        const type =
+            document.querySelector('.at-rest-post-listing')?.dataset.type || '';
         const apiParams = new URLSearchParams({
             user_id: userId,
             post_type: postType,
+            type: type,
             page: urlManager.get('pg') || '1',
             per_page: urlManager.get('per-page') || '6',
             orderby: urlManager.get('orderby') || 'date',
