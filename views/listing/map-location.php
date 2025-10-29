@@ -1,5 +1,6 @@
 <div class="at-rest-post-listing at-rest-map-location-listing at-rest-death-notice-listing sort loop-table" 
 data-user-id="<?php echo esc_attr($user_id); ?>" 
+data-type=""
 data-post-type="map-location">
     <?php $template_helper->drawSpinner(); ?>
 

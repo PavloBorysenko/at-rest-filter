@@ -4,11 +4,15 @@ namespace Supernova\AtRestFilter\Filters;
 
 use Supernova\AtRestFilter\Cache\CacheInterface;
 
-class DeathNoticeFilter extends AbstractNoticeFilter
+class DeathNoticeFilter extends AbstractPostFilter
 {
 
 	protected string $postType = 'death-notices';
 
+    protected array $orderByMap = array(
+		'town'   => 'select-town',
+		'county' => 'select-county',
+	);
 	public function __construct( CacheInterface $cache )
 	{
 		parent::__construct( $cache );
@@ -16,40 +20,22 @@ class DeathNoticeFilter extends AbstractNoticeFilter
 
 	protected function formatPost( int $postId ): array
 	{
-		return array(
-			'id'                        => $postId,
-			'title'                     => get_the_title( $postId ),
-			'link'                      => get_permalink( $postId ),
-			'publish_date'              => get_the_date( 'c', $postId ),
-			'image'                     => $this->getImage( $postId ),
-			'county'                    => $this->getFieldValue( 'select-county', $postId ),
-			'town'                      => $this->getFieldValue( 'select-town', $postId ),
-			'additional_address_county' => $this->getAdditionalField( $postId, 'additional_address_county' ),
-			'additional_address_town'   => $this->getAdditionalField( $postId, 'additional_address_town' ),
-			'icon'                      => $this->getStatusIcon( $postId ),
-		);
+		return $this->dataPost->getPreparedData( $postId );
 	}
 
-	private function getStatusIcon( int $postId ): ?array
+	protected function buildQueryArgs( array $params ): array
 	{
-		$status = get_field( 'status', $postId );
-
-		if ( 'time' === $status ) {
-			return array(
-				'type'    => 'time',
-				'tooltip' => get_field( 'time_badge', 'option' ) ?: 'Time has changed',
-			);
-		}
-
-		if ( 'arrangement' === $status ) {
-			return array(
-				'type'    => 'arrangement',
-				'tooltip' => get_field( 'warning_badge', 'option' ) ?: 'Arrangements have changed',
-			);
-		}
-
-		return null;
+		$params = $this->mapOrderByField( $params );
+		$args   = $this->getBaseQueryArgs( $params );
+		$args = $this->queryBuilder->getSearchArgs( $args );
+		return $args;
 	}
-
+	protected function mapOrderByField( array $params ): array
+	{
+		if ( isset( $params['orderby'] ) && isset( $this->orderByMap[ $params['orderby'] ] ) ) {
+			$params['orderby'] = $this->orderByMap[ $params['orderby'] ];
+		}
+		return $params;
+	}
 }
 

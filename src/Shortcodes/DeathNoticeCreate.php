@@ -4,34 +4,22 @@ namespace Supernova\AtRestFilter\Shortcodes;
 
 use Supernova\AtRestFilter\Http\SearchRequest;
 use Supernova\AtRestFilter\Helper\Template;
-class DeathNoticeListing {
 
-    protected $search;
-    protected $templateHelper;
+class DeathNoticeCreate extends DeathNoticeListing {
+
     public function __construct() {
-        $this->templateHelper = new Template();
-        $this->search = new SearchRequest([
-            'per-page' => 'int',
-            'pg' => 'int',
-            'orderby' => 'string',
-            'order' => 'string',
-        ]);
-        $this->init();
+        parent::__construct();
     }
     public function init() {
-        add_shortcode('at_rest_death_notice_listing', array($this, 'render_shortcode'));
+        add_shortcode('at_rest_death_notice_create', array($this, 'render_shortcode'));
     }
     public function render_shortcode($atts = []) {
         $atts = shortcode_atts([
+            'post_type' => 'death-notices',
             'per_page' => 6,
             'orderby' => 'date',
             'order' => 'desc',
         ], $atts);
-        $template_helper = $this->templateHelper;
-        $per_page = $this->search->get('per-page') ?? $atts['per_page'];
-        $orderby = $this->search->get('orderby') ?? $atts['orderby'];
-        $order = $this->search->get('order') ?? $atts['order'];
-        $search = $this->search;
         $per_page_array = [
             6,
             12,
@@ -39,18 +27,18 @@ class DeathNoticeListing {
             24,
             30,
         ];
+        $template_helper = $this->templateHelper;
+        $per_page = $this->search->get('per-page') ?? $atts['per_page'];
+        $orderby = $this->search->get('orderby') ?? $atts['orderby'];
+        $order = $this->search->get('order') ?? $atts['order'];
+        $user_id = get_current_user_id();
+        $search = $this->search;
         $this->initJs();
         ob_start();
-        include AT_REST_FILTER_DIR . '/views/listing/death-notice.php';
+        include AT_REST_FILTER_DIR . '/views/listing/death-notice-create.php';
         return ob_get_clean();
     }
-
     protected function initJs() {
-        // Enqueue Choices.js library (assuming it's already registered in WordPress)
-        // If Choices.js is not registered, you need to register it first
-       // wp_enqueue_style('choices-css', 'https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/styles/choices.min.css', array(), '10.2.0');
-       // wp_enqueue_script('choices-js', 'https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/scripts/choices.min.js', array(), '10.2.0', true);
-        
         // Enqueue notice listing CSS
         wp_enqueue_style('at-rest-notice-listing-css', AT_REST_FILTER_URL . 'css/notice-listing.css', array(), '1.0.0');
         
@@ -70,5 +58,3 @@ class DeathNoticeListing {
        
     }
 }
-
-

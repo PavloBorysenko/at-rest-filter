@@ -4,6 +4,8 @@ namespace Supernova\AtRestFilter\Filters;
 
 use Supernova\AtRestFilter\Cache\CacheInterface;
 use Supernova\AtRestFilter\Http\SearchRequest;
+use Supernova\AtRestFilter\Data\DataPost;
+use Supernova\AtRestFilter\QueryBuilders\QueryBuilder;
 use WP_Query;
 
 /**
@@ -14,7 +16,13 @@ abstract class AbstractPostFilter
 
 	protected CacheInterface $cache;
 	protected string $postType;
+
+	protected string $type = '';
 	protected int $cacheExpiration = 3600;
+
+	protected ?DataPost $dataPost = null;
+	protected ?QueryBuilder $queryBuilder = null;
+
 
 	public function __construct( CacheInterface $cache )
 	{
@@ -29,6 +37,13 @@ abstract class AbstractPostFilter
 	 */
 	public function apply( array $params ): array
 	{
+		if (isset($params['type'])) {
+			$this->type = sanitize_title($params['type']);
+		}
+
+		$this->setDataPost( $this->getDataPost( $params ) );
+		$this->setQueryBuilder( $this->getPostQueryBuilder( $params ) );
+		
 		$cached = $this->cache->get( $params );
 		if ( $cached !== false ) {
 			return $cached;
@@ -134,6 +149,54 @@ abstract class AbstractPostFilter
 		);
 	}
 
+	public function setDataPost( ?DataPost $dataPost ) {
+		$this->dataPost = $dataPost;
+	}
+	public function setQueryBuilder( ?QueryBuilder $queryBuilder ) {
+		$this->queryBuilder = $queryBuilder;
+	}
+	protected function getPostQueryBuilder( array $params ): ?QueryBuilder {
+
+		$query_builder_name = $this->getQueryBuilderName();
+		try {
+			if (class_exists($query_builder_name)) {
+				return new $query_builder_name($params);
+			}
+		} catch (\Throwable $e) {
+			error_log("QueryBuilder error [{$query_builder_name}]: " . $e->getMessage());
+		}
+		return null;
+	}
+
+	protected function getDataPost( array $params ): ?DataPost {
+		$data_post_name = $this->getDataPostName();
+		
+		try {
+			if (class_exists($data_post_name)) {
+				return new $data_post_name($params);
+			}
+		} catch (\Throwable $e) {
+			error_log("DataPost error [{$data_post_name}]: " . $e->getMessage());
+		}
+		
+		return null;
+	}
+	protected function getQueryBuilderName(): string {
+		$type = $this->type ? $this->toClassName($this->type) : '';
+		return 'Supernova\AtRestFilter\QueryBuilders\\' 
+		. $this->toClassName($this->postType) 
+		. $type
+		. 'QueryBuilder';
+	}
+	protected function getDataPostName(): string {
+		$type = $this->type ? $this->toClassName($this->type) : '';
+		return 'Supernova\AtRestFilter\Data\\' 
+		. $this->toClassName($this->postType) 
+		. 'DataPost';
+	}
+	private function toClassName(string $str): string {
+		return str_replace('-', '', ucwords($str, '-'));
+	}
 	protected function isStandardOrderBy( string $orderby ): bool
 	{
 		$standard = array( 'date', 'title', 'modified', 'rand', 'menu_order', 'name' );

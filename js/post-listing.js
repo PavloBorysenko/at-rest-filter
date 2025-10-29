@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const response = await fetch(
                 `/wp-json/at-rest/v1/posts/filter?${apiParams}`
             );
-
+            console.log('Response:', response);
             const data = await response.json();
 
             console.log('Posts data:', data);

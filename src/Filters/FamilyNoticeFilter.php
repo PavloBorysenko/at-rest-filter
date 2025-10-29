@@ -4,37 +4,31 @@ namespace Supernova\AtRestFilter\Filters;
 
 use Supernova\AtRestFilter\Cache\CacheInterface;
 
-class FamilyNoticeFilter extends DeathNoticeFilter {
+class FamilyNoticeFilter extends AbstractPostFilter {
     protected string $postType = 'family-notices';
+
+	protected array $orderByMap = array(
+		'town'   => 'select-town',
+		'county' => 'select-county',
+	);
     public function __construct( CacheInterface $cache ) {
         parent::__construct( $cache );
     }
     protected function buildQueryArgs( array $params ): array {
-        $args = parent::buildQueryArgs( $params );
-
-		if ( ! empty( $params['notice_type'] ) ) {
-			$args['meta_query'][] = array(
-				'key'     => 'notice_type',
-				'value'   => $params['notice_type'],
-				'compare' => '=',
-			);
-		}
-		error_log(print_r($params, true));
-        return $args;
+		$params = $this->mapOrderByField( $params );
+		$args   = $this->getBaseQueryArgs( $params );
+		$args = $this->queryBuilder->getSearchArgs( $args );
+		return $args;
     }
 
     protected function formatPost( int $postId ): array {
-		return array(
-			'id'                        => $postId,
-			'title'                     => get_the_title( $postId ),
-			'link'                      => get_permalink( $postId ),
-			'publish_date'              => get_the_date( 'c', $postId ),
-			'image'                     => $this->getImage( $postId ),
-			'county'                    => $this->getFieldValue( 'select-county', $postId ),
-			'town'                      => $this->getFieldValue( 'select-town', $postId ),
-			'additional_address_county' => $this->getAdditionalField( $postId, 'additional_address_county' ),
-			'additional_address_town'   => $this->getAdditionalField( $postId, 'additional_address_town' ),
-			'notice_type'               => $this->getFieldValue( 'notice_type', $postId ),
-		);
+		return $this->dataPost->getPreparedData( $postId );
 	}
+	protected function mapOrderByField( array $params ): array
+	{
+		if ( isset( $params['orderby'] ) && isset( $this->orderByMap[ $params['orderby'] ] ) ) {
+			$params['orderby'] = $this->orderByMap[ $params['orderby'] ];
+		}
+		return $params;
+	}	
 }
