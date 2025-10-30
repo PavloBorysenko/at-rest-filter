@@ -55,6 +55,12 @@ class DeathNoticeCreate extends DeathNoticeListing {
             'at-rest-per-page-manager-js',
             'at-rest-sort-manager-js'
         ), '2.0.1', true);
+        wp_enqueue_script('at-rest-filter-death-notice-create-functions', 
+            AT_REST_FILTER_URL . 'js/death-notice-create-functions.js', 
+            array('at-rest-death-notice-listing-js'), '1.0.0', true);
        
+        wp_localize_script('at-rest-filter-death-notice-create-functions', 'atRestData', [
+            'ajaxurl' => admin_url('admin-ajax.php'),
+        ]);
     }
 }

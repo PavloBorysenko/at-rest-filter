@@ -61,8 +61,23 @@ class TemplateRenderer {
     }
 
     evaluateCondition(condition, data) {
-        const evaluated = condition.replace(/([a-zA-Z_][\w.]*)/g, (match) => {
-            if (['true', 'false', 'null', 'undefined'].includes(match)) {
+        let evaluated = condition;
+
+        const stringLiterals = [];
+        evaluated = evaluated.replace(
+            /'([^']*)'|"([^"]*)"/g,
+            (match, single, double) => {
+                const index = stringLiterals.length;
+                stringLiterals.push(single !== undefined ? single : double);
+                return `__STR_${index}__`;
+            }
+        );
+
+        evaluated = evaluated.replace(/([a-zA-Z_][\w.]*)/g, (match) => {
+            if (
+                ['true', 'false', 'null', 'undefined'].includes(match) ||
+                match.startsWith('__STR_')
+            ) {
                 return match;
             }
 
@@ -72,6 +87,10 @@ class TemplateRenderer {
             }
 
             return JSON.stringify(value);
+        });
+
+        evaluated = evaluated.replace(/__STR_(\d+)__/g, (match, index) => {
+            return `"${stringLiterals[index].replace(/"/g, '\\"')}"`;
         });
 
         try {

@@ -37,3 +37,4 @@ new \Supernova\AtRestFilter\Shortcodes\MapFilterForm();
 new \Supernova\AtRestFilter\Shortcodes\MapLocationListing();
 new \Supernova\AtRestFilter\Shortcodes\PublishFilter();
 new \Supernova\AtRestFilter\Shortcodes\DeathNoticeCreate();
+new \Supernova\AtRestFilter\Shortcodes\PublishStatusFilter();
