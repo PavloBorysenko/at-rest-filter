@@ -82,6 +82,25 @@ class TemplateRenderer {
         }
     }
 
+    parseHelperArgs(argsString, data) {
+        const args = [];
+        const regex = /'([^']*)'|"([^"]*)"|(\S+)/g;
+        let match;
+
+        while ((match = regex.exec(argsString)) !== null) {
+            if (match[1] !== undefined) {
+                args.push(match[1]);
+            } else if (match[2] !== undefined) {
+                args.push(match[2]);
+            } else {
+                const value = this.getValue(data, match[3]);
+                args.push(value);
+            }
+        }
+
+        return args;
+    }
+
     render(template, data) {
         let result = template;
         result = result.replace(
@@ -136,9 +155,7 @@ class TemplateRenderer {
             /\{\{(\w+)\s+([^}]+)\}\}/g,
             (match, helper, args) => {
                 if (this.helpers[helper]) {
-                    const argValues = args
-                        .split(' ')
-                        .map((arg) => this.getValue(data, arg.trim()));
+                    const argValues = this.parseHelperArgs(args, data);
                     return this.helpers[helper](...argValues);
                 }
                 return match;

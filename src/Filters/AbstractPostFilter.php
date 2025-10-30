@@ -43,7 +43,7 @@ abstract class AbstractPostFilter
 
 		$this->setDataPost( $this->getDataPost( $params ) );
 		$this->setQueryBuilder( $this->getPostQueryBuilder( $params ) );
-		
+
 		$cached = $this->cache->get( $params );
 		if ( $cached !== false ) {
 			return $cached;
@@ -183,6 +183,7 @@ abstract class AbstractPostFilter
 	}
 	protected function getQueryBuilderName(): string {
 		$type = $this->type ? $this->toClassName($this->type) : '';
+		error_log('type: ' . $type);
 		return 'Supernova\AtRestFilter\QueryBuilders\\' 
 		. $this->toClassName($this->postType) 
 		. $type
@@ -192,6 +193,7 @@ abstract class AbstractPostFilter
 		$type = $this->type ? $this->toClassName($this->type) : '';
 		return 'Supernova\AtRestFilter\Data\\' 
 		. $this->toClassName($this->postType) 
+		. $type
 		. 'DataPost';
 	}
 	private function toClassName(string $str): string {

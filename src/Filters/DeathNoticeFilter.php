@@ -12,6 +12,7 @@ class DeathNoticeFilter extends AbstractPostFilter
     protected array $orderByMap = array(
 		'town'   => 'select-town',
 		'county' => 'select-county',
+		'map' => 'select_church_county',
 	);
 	public function __construct( CacheInterface $cache )
 	{

@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ) || 0;
         const type =
             document.querySelector('.at-rest-post-listing')?.dataset.type || '';
+
         const apiParams = new URLSearchParams({
             user_id: userId,
             post_type: postType,

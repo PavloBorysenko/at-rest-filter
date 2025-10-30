@@ -104,7 +104,6 @@
             {{/each}}
         </div>
         <div class="funeral-homes-table__cell">
-       !! {{has_map}}!!
         {{#if has_map}}
 
             <span class="death-notice__map-icon"></span> 
@@ -118,7 +117,6 @@
                 <span class="death-notice__status status--draft">Draft</span>
             {{/if}}
             {{#if status != 'draft'}}
-           !! {{act_status}}!!
                 <select class="death-notice__status facetwp-ignore {{ status_class }}" data-post-id="{{id}}">
                     <option value="" {{selected acf_status ''}}>No status</option>
                     <option value="time" {{selected acf_status 'time'}}>Changed</option>

@@ -21,7 +21,7 @@ $filterService = new \Supernova\AtRestFilter\Api\PostFilterService($cache);
 $filterService->registerFilter('death-notices', \Supernova\AtRestFilter\Filters\DeathNoticeFilter::class);
 $filterService->registerFilter('family-notices', \Supernova\AtRestFilter\Filters\FamilyNoticeFilter::class);
 $filterService->registerFilter('map-location', \Supernova\AtRestFilter\Filters\MapLocationFilter::class);
-$filterService->registerFilter('death-notices-create', \Supernova\AtRestFilter\Filters\DeathNoticeCreateFilter::class);
+//$filterService->registerFilter('death-notices-create', \Supernova\AtRestFilter\Filters\DeathNoticeCreateFilter::class);
 // Initialize REST API
 $restApi = new \Supernova\AtRestFilter\Api\RestApiController($filterService);
 $restApi->register();
