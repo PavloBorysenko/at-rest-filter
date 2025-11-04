@@ -61,24 +61,5 @@ class PostFilterService
 	public function getAvailablePostTypes(): array {
 		return array_keys( $this->filterMap );
 	}
-
-	/**
-	 * Clear cache for specific post type
-	 *
-	 * @param string $postType Post type slug.
-	 * @return void
-	 */
-	public function clearCache( string $postType ): void {
-		$this->cacheFactory->clearForPostType( $postType );
-	}
-
-	/**
-	 * Clear cache for all registered post types
-	 *
-	 * @return void
-	 */
-	public function clearAllCaches(): void {
-		$this->cacheFactory->clearAll( $this->getAvailablePostTypes() );
-	}
 }
 

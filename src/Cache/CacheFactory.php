@@ -26,27 +26,5 @@ class CacheFactory {
         return new TransientCache($prefix, $this->active);
     }
     
-    /**
-     * Clear cache for specific post type
-     * 
-     * @param string $postType Post type slug
-     * @return void
-     */
-    public function clearForPostType(string $postType): void {
-        $cache = $this->create($postType);
-        $cache->clear();
-    }
-    
-    /**
-     * Clear cache for all post types
-     * 
-     * @param array $postTypes Array of post type slugs
-     * @return void
-     */
-    public function clearAll(array $postTypes): void {
-        foreach ($postTypes as $postType) {
-            $this->clearForPostType($postType);
-        }
-    }
 }
 

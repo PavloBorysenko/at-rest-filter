@@ -23,6 +23,12 @@ $filterService->registerFilter('death-notices', \Supernova\AtRestFilter\Filters\
 $filterService->registerFilter('family-notices', \Supernova\AtRestFilter\Filters\FamilyNoticeFilter::class);
 $filterService->registerFilter('map-location', \Supernova\AtRestFilter\Filters\MapLocationFilter::class);
 
+$cacheManager = new \Supernova\AtRestFilter\Cache\CacheManager(
+    $cacheFactory,
+    ['death-notices', 'family-notices', 'map-location']
+);
+$cacheManager->registerAutoClearing();
+
 // Initialize REST API
 $restApi = new \Supernova\AtRestFilter\Api\RestApiController($filterService);
 $restApi->register();
