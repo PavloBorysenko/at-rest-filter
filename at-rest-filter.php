@@ -21,7 +21,7 @@ $filterService = new \Supernova\AtRestFilter\Api\PostFilterService($cache);
 $filterService->registerFilter('death-notices', \Supernova\AtRestFilter\Filters\DeathNoticeFilter::class);
 $filterService->registerFilter('family-notices', \Supernova\AtRestFilter\Filters\FamilyNoticeFilter::class);
 $filterService->registerFilter('map-location', \Supernova\AtRestFilter\Filters\MapLocationFilter::class);
-//$filterService->registerFilter('death-notices-create', \Supernova\AtRestFilter\Filters\DeathNoticeCreateFilter::class);
+
 // Initialize REST API
 $restApi = new \Supernova\AtRestFilter\Api\RestApiController($filterService);
 $restApi->register();
@@ -36,5 +36,10 @@ new \Supernova\AtRestFilter\Shortcodes\TypeFilter();
 new \Supernova\AtRestFilter\Shortcodes\MapFilterForm();
 new \Supernova\AtRestFilter\Shortcodes\MapLocationListing();
 new \Supernova\AtRestFilter\Shortcodes\PublishFilter();
-new \Supernova\AtRestFilter\Shortcodes\DeathNoticeCreate();
+new \Supernova\AtRestFilter\Shortcodes\DeathNoticeCreateListing();
 new \Supernova\AtRestFilter\Shortcodes\PublishStatusFilter();
+new \Supernova\AtRestFilter\Shortcodes\FamilyNoticeCreateListing();
+new \Supernova\AtRestFilter\Shortcodes\PostStatusFilter();
+new \Supernova\AtRestFilter\Shortcodes\NoticesStatisticSearch();
+new \Supernova\AtRestFilter\Shortcodes\NoticesStatisticListing();
+new \Supernova\AtRestFilter\Shortcodes\Listing\DeathNoticePhotoCondolences();

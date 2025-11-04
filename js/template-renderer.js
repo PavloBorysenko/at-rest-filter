@@ -47,6 +47,10 @@ class TemplateRenderer {
             },
 
             checked: (current, expected) => {
+                // Если expected не передан, проверяем current на truthy
+                if (expected === undefined) {
+                    return current ? 'checked="checked"' : '';
+                }
                 return current == expected ? 'checked="checked"' : '';
             },
 

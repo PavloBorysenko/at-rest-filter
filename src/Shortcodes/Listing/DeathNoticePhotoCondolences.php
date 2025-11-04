@@ -1,25 +1,43 @@
 <?php
 
-namespace Supernova\AtRestFilter\Shortcodes;
+namespace Supernova\AtRestFilter\Shortcodes\Listing;
 
 use Supernova\AtRestFilter\Http\SearchRequest;
 use Supernova\AtRestFilter\Helper\Template;
 
-class DeathNoticeCreate extends DeathNoticeListing {
+class DeathNoticePhotoCondolences {
+    private $search;
+    private $templateHelper;
 
+    private string $postType = 'death-notices';
     public function __construct() {
-        parent::__construct();
+        $this->templateHelper = new Template();
+        $this->search = new SearchRequest([
+            'per-page' => 'int',
+            'pg' => 'int',
+            'orderby' => 'string',
+            'order' => 'string',
+        ]);
+        $this->init();
     }
     public function init() {
-        add_shortcode('at_rest_death_notice_create', array($this, 'render_shortcode'));
+        add_shortcode('at_rest_death_notice_photo_condolences', [$this, 'render_shortcode']);
     }
-    public function render_shortcode($atts = []) {
+    public function render_shortcode($atts) {
+        if (!is_user_logged_in()) return 'Please log in.';
         $atts = shortcode_atts([
-            'post_type' => 'death-notices',
             'per_page' => 6,
             'orderby' => 'date',
             'order' => 'desc',
         ], $atts);
+        $post_type = $this->postType;
+        $user_id = get_current_user_id();
+        $type = 'photo-condolences';
+        $template_helper = $this->templateHelper;
+        $per_page = $this->search->get('per-page') ?? $atts['per_page'];
+        $orderby = $this->search->get('orderby') ?? $atts['orderby'];
+        $order = $this->search->get('order') ?? $atts['order'];
+        $search = $this->search;
         $per_page_array = [
             6,
             12,
@@ -27,18 +45,12 @@ class DeathNoticeCreate extends DeathNoticeListing {
             24,
             30,
         ];
-        $template_helper = $this->templateHelper;
-        $per_page = $this->search->get('per-page') ?? $atts['per_page'];
-        $orderby = $this->search->get('orderby') ?? $atts['orderby'];
-        $order = $this->search->get('order') ?? $atts['order'];
-        $user_id = get_current_user_id();
-        $search = $this->search;
         $this->initJs();
         ob_start();
-        include AT_REST_FILTER_DIR . '/views/listing/death-notice-create.php';
+        include AT_REST_FILTER_DIR . '/views/listing/death-notice-photo-condolences.php';
         return ob_get_clean();
     }
-    protected function initJs() {
+    private function initJs() {
         // Enqueue notice listing CSS
         wp_enqueue_style('at-rest-notice-listing-css', AT_REST_FILTER_URL . 'css/notice-listing.css', array(), '1.0.0');
         
@@ -55,11 +67,11 @@ class DeathNoticeCreate extends DeathNoticeListing {
             'at-rest-per-page-manager-js',
             'at-rest-sort-manager-js'
         ), '2.0.1', true);
-        wp_enqueue_script('at-rest-filter-death-notice-create-functions', 
-            AT_REST_FILTER_URL . 'js/death-notice-create-functions.js', 
+
+        wp_enqueue_script('at-rest-filter-death-notice-photo-condolences-functions', 
+            AT_REST_FILTER_URL . 'js/functions/death-notice-photo-condolences-functions.js', 
             array('at-rest-death-notice-listing-js'), '1.0.0', true);
-       
-        wp_localize_script('at-rest-filter-death-notice-create-functions', 'atRestData', [
+        wp_localize_script('at-rest-filter-death-notice-photo-condolences-functions', 'atRestData', [
             'ajaxurl' => admin_url('admin-ajax.php'),
         ]);
     }

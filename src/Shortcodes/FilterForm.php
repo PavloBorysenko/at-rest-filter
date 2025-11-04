@@ -32,18 +32,31 @@ class FilterForm {
     public function render_form($atts = []) {
         $atts = shortcode_atts([
             'post_type' => 'death-notices',
+            'hide_items' => '',
             'days' => 0,
         ], $atts);
-        $prefiltered_data = $this->setDays((int)$atts['days']);
-        $prefiltered_data['search_type'] = $atts['post_type'];
+        $prefiltered_data = $this->getPrefilteredData($atts);
         $this->dequeueFilterJs();
         $this->initJs();
+        
+        $hide_items = explode(',', $atts['hide_items']);
 
         $counties_data = $this->county_data->getCountiesData();
         $search = $this->search;
         ob_start();
         include AT_REST_FILTER_DIR . '/views/filter/form.php';
         return ob_get_clean();
+    }
+
+    private function getPrefilteredData($atts) {
+        $prefiltered_data = [];
+        if ($atts['days'] > 0) {
+            $prefiltered_data = $this->setDays($atts['days']);
+        }
+        if (!empty($prefiltered_data)) {
+            $prefiltered_data['search_type'] = $atts['post_type'];
+        }
+        return $prefiltered_data;
     }
 
     private function setDays( int$days) : array {

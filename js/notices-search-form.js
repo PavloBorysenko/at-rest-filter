@@ -225,7 +225,9 @@
             );
             townChoices.disable();
         }
-        townSelect.disabled = true;
+        if (townSelect) {
+            townSelect.disabled = true;
+        }
 
         Object.values(datePickers).forEach((picker) => picker?.clear());
         document

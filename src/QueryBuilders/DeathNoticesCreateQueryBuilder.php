@@ -3,8 +3,8 @@
 namespace Supernova\AtRestFilter\QueryBuilders;
 
 class DeathNoticesCreateQueryBuilder extends DeathNoticesQueryBuilder {
-    private $userId;
-    private $params;
+    protected $userId;
+    protected $params;
     public function __construct($params) {
         $this->params = $params;
         $this->userId = $params['user_id'] ?? 0;

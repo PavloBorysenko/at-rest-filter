@@ -3,7 +3,7 @@
 namespace Supernova\AtRestFilter\QueryBuilders;
 
 class DeathNoticesQueryBuilder implements QueryBuilder {
-    private $params;
+    protected $params;
     public function __construct($params) {
         $this->params = $params;
     }

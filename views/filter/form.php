@@ -1,5 +1,6 @@
 <div class="at-rest-filter-form-wrapper form col-5">
     <form class="filters__form" data-search-type="<?php echo esc_attr($atts['post_type']); ?>">
+        <?php if (!in_array('firstname', $hide_items)) { ?>
         <div class="form-user__field">
             <input  type="text" 
                     name="firstname" 
@@ -14,7 +15,8 @@
                     style="display: none;"
             >×</button>
         </div>
-
+        <?php } ?>
+        <?php if (!in_array('surname', $hide_items)) { ?>
         <div class="form-user__field">
             <input  type="text" 
                     name="surname" 
@@ -29,7 +31,8 @@
                     style="display: none;"
             >×</button>
         </div>
-
+        <?php } ?>
+        <?php if (!in_array('nee', $hide_items)) { ?>
         <div class="form-user__field">
             <input  type="text" 
                     name="nee" 
@@ -44,7 +47,8 @@
                     style="display: none;"
             >×</button>
         </div>
-
+        <?php } ?>
+        <?php if (!in_array('county', $hide_items)) { ?>
         <div class="form-user__field">
             <select id="filter-county" name="county" class="form-user__select">
             <option value="" disabled <?php selected($search->get('county'), ''); ?>>County</option>
@@ -61,7 +65,8 @@
                     style="display: none;"
             >×</button>
         </div>
-
+        <?php } ?>
+        <?php if (!in_array('town', $hide_items)) { ?>
         <div class="form-user__field">
             <select id="filter-town" name="town" class="form-user__select" disabled>
             <option value="" disabled selected>Town</option>
@@ -82,7 +87,8 @@
                     style="display: none;"
             >×</button>
         </div>
-
+        <?php } ?>
+        <?php if (!in_array('from', $hide_items)) { ?>
         <div class="form-user__field">
             <input  type="text" 
                     name="from" 
@@ -92,7 +98,8 @@
                     value="<?php echo esc_attr($search->get('from', '')); ?>"
             >
         </div>
-
+        <?php } ?>
+        <?php if (!in_array('to', $hide_items)) { ?>
         <div class="form-user__field">
             <input  type="text" 
                     name="to" 
@@ -102,6 +109,7 @@
                     value="<?php echo esc_attr($search->get('to', '')); ?>"
             >
         </div>
+        <?php } ?>
         <button type="submit" style="display: none;"></button>
     </form>
     

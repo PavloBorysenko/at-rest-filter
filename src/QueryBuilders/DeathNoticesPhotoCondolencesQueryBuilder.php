@@ -2,20 +2,17 @@
 
 namespace Supernova\AtRestFilter\QueryBuilders;
 
-class FamilyNoticesQueryBuilder extends DeathNoticesQueryBuilder {
+class DeathNoticesPhotoCondolencesQueryBuilder extends DeathNoticesQueryBuilder {
     protected $params;
+    protected $userId;
     public function __construct($params) {
         $this->params = $params;
+        $this->userId = $params['user_id'] ?? 0;
     }
     public function getSearchArgs( array $args ): array {
         $args = parent::getSearchArgs( $args );
-        if ( ! empty( $this->params['notice_type'] ) ) {
-			$args['meta_query'][] = array(
-				'key'     => 'notice_type',
-				'value'   => $this->params['notice_type'],
-				'compare' => '=',
-			);
-		}
+        $args['post_status'] = ['publish', 'draft'];
+        $args['author'] = $this->userId;
         return $args;
     }
 }

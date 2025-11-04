@@ -27,6 +27,8 @@ abstract class AbstractPostFilter
 	public function __construct( CacheInterface $cache )
 	{
 		$this->cache = $cache;
+		
+		add_filter('posts_orderby', array($this, 'posts_orderby'), 10, 2);
 	}
 
 	/**
@@ -183,7 +185,6 @@ abstract class AbstractPostFilter
 	}
 	protected function getQueryBuilderName(): string {
 		$type = $this->type ? $this->toClassName($this->type) : '';
-		error_log('type: ' . $type);
 		return 'Supernova\AtRestFilter\QueryBuilders\\' 
 		. $this->toClassName($this->postType) 
 		. $type
@@ -201,7 +202,7 @@ abstract class AbstractPostFilter
 	}
 	protected function isStandardOrderBy( string $orderby ): bool
 	{
-		$standard = array( 'date', 'title', 'modified', 'rand', 'menu_order', 'name' );
+		$standard = array( 'date', 'title', 'modified', 'rand', 'menu_order', 'name', 'post_status' );
 		return in_array( $orderby, $standard, true );
 	}
 
@@ -228,5 +229,13 @@ abstract class AbstractPostFilter
 	{
 		$this->cacheExpiration = $seconds;
 		return $this;
+	}
+
+	public function posts_orderby( $orderby, $query ) {
+		if ($query->get('orderby') === 'post_status') {
+			$order = strtoupper($query->get('order')) === 'DESC' ? 'DESC' : 'ASC';
+			$orderby = "{$wpdb->posts}.post_status {$order}";
+		}
+		return $orderby;
 	}
 }
