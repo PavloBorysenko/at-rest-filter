@@ -126,3 +126,7 @@ Toggle between list and grid view.
 -   funeral-director/family-notices/ - `[at_rest_filter post_type="family_notice"][at_rest_type_filter_family_notices][at_rest_post_status_filter][at_rest_family_notice_create_listing]`
 -   funeral-director/photo-and-condolence/ - `[at_rest_filter hide_items='county,town'][at_rest_death_notice_photo_condolences]`
 -   funeral-director/statistic/ - `[at_rest_notices_statistic_search][at_rest_notices_statistic_listing]`
+
+## Troubleshooting
+
+-   No results when user is logged out. Check if third-party plugins disable REST API and enable it in settings. For example in these plugins: Admin and Site Enhancements; Perfmatters; Breakdance;

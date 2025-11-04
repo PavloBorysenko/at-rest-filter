@@ -673,43 +673,51 @@ body:not(.is--grid-view)
 }
 .breakdance
     .at-rest-family-notice-create-listing
+    .funeral-homes-table
     .funeral-homes-table__cell:nth-child(2) {
     width: 19%;
 }
 .breakdance
     .at-rest-family-notice-create-listing
+    .funeral-homes-table
     .funeral-homes-table__cell:nth-child(3) {
     width: 10.5%;
 }
 .breakdance
     .at-rest-family-notice-create-listing
+    .funeral-homes-table
     .funeral-homes-table__cell:nth-child(4) {
     width: 10.5%;
 }
 .breakdance
     .at-rest-family-notice-create-listing
+    .funeral-homes-table
     .funeral-homes-table__cell:nth-child(5) {
     width: 8%;
     text-align: center !important;
 }
 .breakdance
     .at-rest-family-notice-create-listing
+    .funeral-homes-table
     .funeral-homes-table__cell:nth-child(6) {
     width: 10%;
 }
 .breakdance
     .at-rest-family-notice-create-listing
+    .funeral-homes-table
     .funeral-homes-table__cell:nth-child(7) {
     width: 15%;
     white-space: nowrap;
 }
 .breakdance
     .at-rest-family-notice-create-listing
+    .funeral-homes-table
     .funeral-homes-table__cell:nth-child(8) {
     width: 10%;
 }
 .breakdance
     .at-rest-family-notice-create-listing
+    .funeral-homes-table
     .funeral-homes-table__cell:nth-child(9) {
     width: 13%;
     text-align: right !important;
@@ -718,12 +726,14 @@ body:not(.is--grid-view)
 
 .breakdance
     .at-rest-family-notice-create-listing
+    .funeral-homes-table
     .funeral-homes-table__toggle-extra {
     left: 0;
     right: auto;
 }
 .breakdance
     .at-rest-family-notice-create-listing
+    .funeral-homes-table
     .death-notice__status.status--publish {
     background: none;
     cursor: default;

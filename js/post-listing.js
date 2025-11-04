@@ -1,10 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('Death notice listing script loaded');
-    console.log(
-        'TemplateRenderer available:',
-        typeof TemplateRenderer !== 'undefined'
-    );
-
     if (typeof TemplateRenderer === 'undefined') {
         console.error(
             'TemplateRenderer is not loaded. Check if template-renderer.js is properly enqueued.'
@@ -13,11 +7,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const renderer = new TemplateRenderer();
-    console.log('TemplateRenderer initialized successfully');
 
     const postType = document.querySelector('.at-rest-post-listing')?.dataset
         .postType;
-    console.log(document.querySelector('.at-rest-post-listing'));
 
     const urlManager = new URLManager({
         onUpdate: (params) => {
@@ -79,12 +71,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const response = await fetch(
                 `/wp-json/at-rest/v1/posts/filter?${apiParams}`
             );
-            console.log('Response:', response);
+
             const data = await response.json();
 
-            console.log('Posts data:', data);
-            console.log('Total posts:', data.pagination?.total);
-            console.log('Posts:', data.posts);
+            //console.log('Posts data:', data);
+            //console.log('Total posts:', data.pagination?.total);
+            //console.log('Posts:', data.posts);
 
             if (data.posts) {
                 renderPosts(data.posts, postType);
