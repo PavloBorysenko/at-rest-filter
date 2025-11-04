@@ -2,7 +2,6 @@
 
 namespace Supernova\AtRestFilter\Api;
 
-use Supernova\AtRestFilter\Http\SearchRequest;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_Error;
@@ -13,18 +12,15 @@ class RestApiController
 	private PostFilterService $service;
 	private string $namespace = 'at-rest/v1';
 
-	public function __construct( PostFilterService $service )
-	{
+	public function __construct( PostFilterService $service ) {
 		$this->service = $service;
 	}
 
-	public function register(): void
-	{
+	public function register(): void {
 		add_action( 'rest_api_init', array( $this, 'registerRoutes' ) );
 	}
 
-	public function registerRoutes(): void
-	{
+	public function registerRoutes(): void {
 		register_rest_route(
 			$this->namespace,
 			'/posts/filter',
@@ -37,8 +33,7 @@ class RestApiController
 		);
 	}
 
-	public function filterPosts( WP_REST_Request $request )
-	{
+	public function filterPosts( WP_REST_Request $request ){
 		$postType = $request->get_param( 'post_type' );
 
 		if ( empty( $postType ) ) {
@@ -60,8 +55,7 @@ class RestApiController
 		return new WP_REST_Response( $result, 200 );
 	}
 
-	private function getQueryArgs(): array
-	{
+	private function getQueryArgs(): array {
 		return array(
 			'post_type' => array(
 				'required'          => true,

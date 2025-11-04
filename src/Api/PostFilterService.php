@@ -2,18 +2,17 @@
 
 namespace Supernova\AtRestFilter\Api;
 
-use Supernova\AtRestFilter\Cache\CacheInterface;
+use Supernova\AtRestFilter\Cache\CacheFactory;
 use WP_Error;
 
 class PostFilterService
 {
 
-	private CacheInterface $cache;
+	private CacheFactory $cacheFactory;
 	private array $filterMap = array();
 
-	public function __construct( CacheInterface $cache )
-	{
-		$this->cache = $cache;
+	public function __construct( CacheFactory $cacheFactory ) {
+		$this->cacheFactory = $cacheFactory;
 	}
 
 	/**
@@ -22,8 +21,7 @@ class PostFilterService
 	 * @param string $postType   Post type slug.
 	 * @param string $filterClass Full filter class name.
 	 */
-	public function registerFilter( string $postType, string $filterClass ): void
-	{
+	public function registerFilter( string $postType, string $filterClass ): void {
 		$this->filterMap[ $postType ] = $filterClass;
 	}
 
@@ -34,8 +32,7 @@ class PostFilterService
 	 * @param  array  $params   Filter parameters.
 	 * @return array|WP_Error Filtered posts or error.
 	 */
-	public function filter( string $postType, array $params )
-	{
+	public function filter( string $postType, array $params ) {
 		if ( ! post_type_exists( $postType ) ) {
 			return new WP_Error(
 				'invalid_post_type',
@@ -53,14 +50,35 @@ class PostFilterService
 		}
 
 		$filterClass = $this->filterMap[ $postType ];
-		$filter      = new $filterClass( $this->cache );
+		
+		// Create isolated cache instance for this post type
+		$cache = $this->cacheFactory->create( $postType );
+		$filter = new $filterClass( $cache );
 
 		return $filter->apply( $params );
 	}
 
-	public function getAvailablePostTypes(): array
-	{
+	public function getAvailablePostTypes(): array {
 		return array_keys( $this->filterMap );
+	}
+
+	/**
+	 * Clear cache for specific post type
+	 *
+	 * @param string $postType Post type slug.
+	 * @return void
+	 */
+	public function clearCache( string $postType ): void {
+		$this->cacheFactory->clearForPostType( $postType );
+	}
+
+	/**
+	 * Clear cache for all registered post types
+	 *
+	 * @return void
+	 */
+	public function clearAllCaches(): void {
+		$this->cacheFactory->clearAll( $this->getAvailablePostTypes() );
 	}
 }
 
