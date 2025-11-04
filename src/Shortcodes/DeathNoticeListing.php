@@ -54,6 +54,8 @@ class DeathNoticeListing {
         // Enqueue notice listing CSS
         wp_enqueue_style('at-rest-notice-listing-css', AT_REST_FILTER_URL . 'css/notice-listing.css', array(), '1.0.0');
         
+        
+
         // Enqueue our custom scripts with proper dependencies
         wp_enqueue_script('at-rest-template-renderer-js', AT_REST_FILTER_URL . 'js/template-renderer.js', array(), '1.0.3', true);
         wp_enqueue_script('at-rest-url-manager-js', AT_REST_FILTER_URL . 'js/url-manager.js', array(), '1.0.1', true);
@@ -67,6 +69,8 @@ class DeathNoticeListing {
             'at-rest-per-page-manager-js',
             'at-rest-sort-manager-js'
         ), '2.0.1', true);
+        $this->templateHelper->connectTippy();
+
        
     }
 }

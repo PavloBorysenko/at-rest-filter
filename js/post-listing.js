@@ -194,7 +194,6 @@ document.addEventListener('DOMContentLoaded', function () {
     sortManager.init();
 
     fetchPosts(postType);
-    initTippy();
 
     window.addEventListener('filterUpdate', () => {
         urlManager.delete('pg', { silent: true });

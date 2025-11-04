@@ -897,3 +897,34 @@ body:not(.is--grid-view)
     .funeral-homes-table__cell:nth-child(6) {
     width: 22.5%;
 }
+
+/* Tippy */
+.tippy-box[data-theme~='custom-dark'] {
+    background-color: #353945 !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
+    line-height: 1.55 !important;
+    padding: 0px !important;
+    font-weight: 400;
+    text-align: center !important;
+    border-radius: 4px !important;
+}
+.tippy-box[data-theme~='custom-dark'] > .tippy-content {
+    text-align: center !important;
+}
+.tippy-box[data-theme~='custom-dark'][data-placement^='top']
+    > .tippy-arrow::before {
+    border-top-color: #353945 !important;
+}
+.tippy-box[data-theme~='custom-dark'][data-placement^='bottom']
+    > .tippy-arrow::before {
+    border-bottom-color: #353945 !important;
+}
+.tippy-box[data-theme~='custom-dark'][data-placement^='left']
+    > .tippy-arrow::before {
+    border-left-color: #353945 !important;
+}
+.tippy-box[data-theme~='custom-dark'][data-placement^='right']
+    > .tippy-arrow::before {
+    border-right-color: #353945 !important;
+}
