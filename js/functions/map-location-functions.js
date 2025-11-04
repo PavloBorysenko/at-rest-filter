@@ -13,7 +13,7 @@ function toggleFavoriteMapLocation() {
                 const postId = this.dataset.postId;
                 const row = this.closest('.funeral-homes-table__row');
 
-                fetch('/wp-admin/admin-ajax.php', {
+                fetch(atRestData.ajaxurl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -39,7 +39,7 @@ function toggleFavoriteMapLocation() {
 }
 
 function initDeleteMapLocation() {
-    let ajaxurl = '/wp-admin/admin-ajax.php';
+    let ajaxurl = atRestData.ajaxurl;
     let deleteId = null;
 
     document
@@ -62,7 +62,7 @@ function initDeleteMapLocation() {
                 post_id: deleteId,
             });
 
-            fetch(ajaxurl, {
+            fetch(atRestData.ajaxurl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

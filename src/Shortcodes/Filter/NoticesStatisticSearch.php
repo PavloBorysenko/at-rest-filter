@@ -1,12 +1,16 @@
 <?php
 
-namespace Supernova\AtRestFilter\Shortcodes;
+namespace Supernova\AtRestFilter\Shortcodes\Filter;
 
 use Supernova\AtRestFilter\Http\SearchRequest;
+use Supernova\AtRestFilter\Helper\Template;
 
 class NoticesStatisticSearch {
     private SearchRequest $search;
+
+    private Template $templateHelper;
     public function __construct() {
+        $this->templateHelper = new Template();
         $this->search = new SearchRequest([
             '_statistic_search' => 'string',
         ]);
@@ -27,13 +31,9 @@ class NoticesStatisticSearch {
         return ob_get_clean();
     }
     private function initJs() {
-        wp_enqueue_script('at-rest-url-manager-js', 
-            AT_REST_FILTER_URL . 'js/url-manager.js', 
-            array(), 
-            '1.0.1', 
-            true);
+        $this->templateHelper->connectUrlManager();
         wp_enqueue_script('at-rest-statistic-search-js', 
-            AT_REST_FILTER_URL . 'js/statistic-search.js', 
+            AT_REST_FILTER_URL . 'js/filters/statistic-search.js', 
             array('at-rest-url-manager-js'), 
             '1.0.1', 
             true);

@@ -27,19 +27,19 @@ $restApi = new \Supernova\AtRestFilter\Api\RestApiController($filterService);
 $restApi->register();
 
 // Initialize shortcodes
-new \Supernova\AtRestFilter\Shortcodes\FilterForm();
-new \Supernova\AtRestFilter\Shortcodes\DeathNoticeListing();
-new \Supernova\AtRestFilter\Shortcodes\FamilyNoticeListing();
+new \Supernova\AtRestFilter\Shortcodes\Filter\MainForm();
+new \Supernova\AtRestFilter\Shortcodes\Listing\DeathNoticeListing();
+new \Supernova\AtRestFilter\Shortcodes\Listing\FamilyNoticeListing();
 new \Supernova\AtRestFilter\Shortcodes\ViewSelect();
-new \Supernova\AtRestFilter\Shortcodes\TypeFilter();
+new \Supernova\AtRestFilter\Shortcodes\Filter\TypeFilter();
 // FD
-new \Supernova\AtRestFilter\Shortcodes\MapFilterForm();
-new \Supernova\AtRestFilter\Shortcodes\MapLocationListing();
-new \Supernova\AtRestFilter\Shortcodes\PublishFilter();
-new \Supernova\AtRestFilter\Shortcodes\DeathNoticeCreateListing();
-new \Supernova\AtRestFilter\Shortcodes\PublishStatusFilter();
-new \Supernova\AtRestFilter\Shortcodes\FamilyNoticeCreateListing();
-new \Supernova\AtRestFilter\Shortcodes\PostStatusFilter();
-new \Supernova\AtRestFilter\Shortcodes\NoticesStatisticSearch();
-new \Supernova\AtRestFilter\Shortcodes\NoticesStatisticListing();
+new \Supernova\AtRestFilter\Shortcodes\Filter\MapFilterForm();
+new \Supernova\AtRestFilter\Shortcodes\Listing\MapLocationListing();
+new \Supernova\AtRestFilter\Shortcodes\Filter\PublishFilter();
+new \Supernova\AtRestFilter\Shortcodes\Listing\DeathNoticeCreateListing();
+new \Supernova\AtRestFilter\Shortcodes\Filter\PublishStatusFilter();
+new \Supernova\AtRestFilter\Shortcodes\Listing\FamilyNoticeCreateListing();
+new \Supernova\AtRestFilter\Shortcodes\Filter\PostStatusFilter();
+new \Supernova\AtRestFilter\Shortcodes\Filter\NoticesStatisticSearch();
+new \Supernova\AtRestFilter\Shortcodes\Listing\NoticesStatisticListing();
 new \Supernova\AtRestFilter\Shortcodes\Listing\DeathNoticePhotoCondolences();

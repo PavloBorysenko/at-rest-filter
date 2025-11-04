@@ -1,13 +1,13 @@
 <?php
 
-namespace Supernova\AtRestFilter\Shortcodes;
+namespace Supernova\AtRestFilter\Shortcodes\Listing;
 
 use Supernova\AtRestFilter\Http\SearchRequest;
 use Supernova\AtRestFilter\Helper\Template;
 
 class NoticesStatisticListing {
-    private $search;
-    private $templateHelper;
+    private SearchRequest $search;
+    private Template $templateHelper;
 
     private string $type = 'statistic';
     public function __construct() {
@@ -55,24 +55,11 @@ class NoticesStatisticListing {
         return ob_get_clean();
     }
     private function initJs() {
-        wp_enqueue_style('at-rest-notice-listing-css', AT_REST_FILTER_URL . 'css/notice-listing.css', array(), '1.0.0');
+        $this->templateHelper->connectMainCSS();
+        $this->templateHelper->connectListingJsSettings();
         // Enqueue our custom scripts with proper dependencies
-        wp_enqueue_script('at-rest-template-renderer-js', AT_REST_FILTER_URL . 'js/template-renderer.js', array(), '1.0.3', true);
-        wp_enqueue_script('at-rest-url-manager-js', AT_REST_FILTER_URL . 'js/url-manager.js', array(), '1.0.1', true);
-        wp_enqueue_script('at-rest-pagination-manager-js', AT_REST_FILTER_URL . 'js/pagination-manager.js', array('at-rest-url-manager-js'), '1.0.0', true);
-        wp_enqueue_script('at-rest-per-page-manager-js', AT_REST_FILTER_URL . 'js/per-page-manager.js', array('at-rest-url-manager-js'), '1.0.2', true);
-        wp_enqueue_script('at-rest-sort-manager-js', AT_REST_FILTER_URL . 'js/sort-manager.js', array('at-rest-url-manager-js'), '1.0.2', true);
-        wp_enqueue_script('at-rest-death-notice-listing-js', AT_REST_FILTER_URL . 'js/post-listing.js', array(
-            'at-rest-template-renderer-js',
-            'at-rest-url-manager-js',
-            'at-rest-pagination-manager-js',
-            'at-rest-per-page-manager-js',
-            'at-rest-sort-manager-js'
-        ), '2.0.1', true);
-
         wp_enqueue_script('at-rest-filter-notices-statistic-listing-functions', 
-            AT_REST_FILTER_URL . 'js/notices-statistic-listing-functions.js', 
-            array('at-rest-death-notice-listing-js'), '1.0.0', true);
-
+            AT_REST_FILTER_URL . 'js/functions/notices-statistic-listing-functions.js', 
+            array('at-rest-post-listing-js'), '1.0.0', true);
     }
 }

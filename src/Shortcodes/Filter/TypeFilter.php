@@ -1,14 +1,18 @@
 <?php
 
-namespace Supernova\AtRestFilter\Shortcodes;
+namespace Supernova\AtRestFilter\Shortcodes\Filter;
 
 use Supernova\AtRestFilter\Http\SearchRequest;
+use Supernova\AtRestFilter\Helper\Template;
 
 class TypeFilter {
 
-    private $types = [];
+    private array $types = [];
     private SearchRequest $search;
+
+    private Template $templateHelper;
     public function __construct() {
+        $this->templateHelper = new Template();
         $this->types = [
             "Memorial Mass",
             "Memorial Service",
@@ -37,10 +41,10 @@ class TypeFilter {
         return ob_get_clean();
     }
     private function initJs() {
-        wp_enqueue_style('choices-css', 'https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css', array(), '1.0.1');
-        wp_enqueue_script('choices-js', 'https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js', array(), '1.0.1', true);
-        wp_enqueue_script('at-rest-url-manager-js', AT_REST_FILTER_URL . 'js/url-manager.js', array(), '1.0.1', true);
-        wp_enqueue_script('at-rest-type-filter-js', AT_REST_FILTER_URL . 'js/notices-type-filter.js', 
+        $this->templateHelper->connectChoices();
+        $this->templateHelper->connectUrlManager();
+        
+        wp_enqueue_script('at-rest-type-filter-js', AT_REST_FILTER_URL . 'js/filters/notices-type-filter.js', 
         array('choices-js', 'at-rest-url-manager-js'), '1.2.2', true);
     }
 }

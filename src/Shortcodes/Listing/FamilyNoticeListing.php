@@ -1,6 +1,6 @@
 <?php
 
-namespace Supernova\AtRestFilter\Shortcodes;
+namespace Supernova\AtRestFilter\Shortcodes\Listing;
 
 class FamilyNoticeListing extends DeathNoticeListing {
     public function __construct() {
