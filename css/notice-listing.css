@@ -115,10 +115,6 @@
     padding: 2rem;
 }
 
-.at-rest-loading-spinner svg {
-    animation: pulse 2s ease-in-out infinite;
-}
-
 @keyframes pulse {
     0%,
     100% {
