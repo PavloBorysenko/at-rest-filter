@@ -220,12 +220,6 @@ div[data-post-type='family-notices'] .death-notice__status.status--publish {
     padding: 0rem;
 }
 
-div[data-post-type='family-notices'] .death-notice__status.status--publish {
-    background: none;
-    cursor: default;
-    padding: 0rem;
-}
-
 body:not(.is--grid-view)
     div[data-post-type='family-notices']
     .funeral-homes-table__row:nth-child(2n) {
@@ -287,21 +281,6 @@ body.is--grid-view
     .family-notices-table
     .funeral-homes-table__cell.column-status {
     display: none !important;
-}
-
-body:not(.is--grid-view)
-    div[data-post-type='family-notices']
-    .funeral-homes-table__row.has-addresses
-    .funeral-homes-table__cell:nth-child(4) {
-    padding: 1rem 0;
-}
-
-body:not(.is--grid-view)
-    div[data-post-type='family-notices']
-    .funeral-homes-table__row.has-addresses
-    .funeral-homes-table__cell
-    .list-item:not(:first-child) {
-    padding-top: 8px;
 }
 
 div[data-post-type='family-notices']
@@ -740,14 +719,6 @@ body:not(.is--grid-view)
     padding: 0rem;
 }
 
-.breakdance
-    .at-rest-family-notice-create-listing
-    .death-notice__status.status--publish {
-    background: none;
-    cursor: default;
-    padding: 0rem;
-}
-
 body:not(.is--grid-view)
     .at-rest-family-notice-create-listing
     .funeral-homes-table__row:nth-child(2n) {
@@ -760,21 +731,6 @@ body:not(.is--grid-view)
     .funeral-homes-table__cell:not(.actions) {
     flex-direction: column;
     align-items: baseline;
-}
-
-body:not(.is--grid-view)
-    .at-rest-family-notice-create-listing
-    .funeral-homes-table__row.has-addresses
-    .funeral-homes-table__cell:nth-child(4) {
-    padding: 1rem 0;
-}
-
-body:not(.is--grid-view)
-    .at-rest-family-notice-create-listing
-    .funeral-homes-table__row.has-addresses
-    .funeral-homes-table__cell
-    .list-item:not(:first-child) {
-    padding-top: 8px;
 }
 
 body:not(.is--grid-view)
