@@ -22,13 +22,19 @@ class TemplateRenderer {
             date: (dateStr, format = 'short') => {
                 if (!dateStr) return '';
                 const date = new Date(dateStr);
-                return format === 'long'
-                    ? date.toLocaleDateString('en-GB', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                      })
-                    : date.toLocaleDateString('en-GB');
+                if (format === 'long') {
+                    const day = date.getDate();
+                    const month = date.toLocaleDateString('en-GB', {
+                        month: 'long',
+                    });
+                    const year = date.getFullYear();
+                    return `${day} ${month} ${year}`;
+                } else {
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const year = date.getFullYear();
+                    return `${day}.${month}.${year}`;
+                }
             },
 
             join: (arr, separator = ', ') => {
@@ -116,7 +122,7 @@ class TemplateRenderer {
                 args.push(match[2]);
             } else {
                 const value = this.getValue(data, match[3]);
-                args.push(value);
+                args.push(value !== null ? value : match[3]);
             }
         }
 
