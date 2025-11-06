@@ -399,12 +399,13 @@
         toggleClearAllBtn();
     };
 
+    applyPrefilteredData(prefilteredData, urlManager);
+
     initCountyChoices();
     initTownChoices();
     initDatePickers();
 
     setTimeout(() => {
-        applyPrefilteredData(prefilteredData, urlManager);
         restoreFormFromURL();
         toggleClearAllBtn();
     }, 200);

@@ -185,7 +185,9 @@ document.addEventListener('DOMContentLoaded', function () {
     perPageManager.init();
     sortManager.init();
 
-    fetchPosts(postType);
+    setTimeout(() => {
+        fetchPosts(postType);
+    }, 100);
 
     window.addEventListener('filterUpdate', () => {
         urlManager.delete('pg', { silent: true });
