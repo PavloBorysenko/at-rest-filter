@@ -16,8 +16,7 @@ class DeathNoticesDataPost implements DataPost {
 			'image'                     => $this->getImage( $postId ),
 			'county'                    => $this->getFieldValue( 'select-county', $postId ),
 			'town'                      => $this->getFieldValue( 'select-town', $postId ),
-			'additional_address_county' => $this->getAdditionalField( $postId, 'additional_address_county' ),
-			'additional_address_town'   => $this->getAdditionalField( $postId, 'additional_address_town' ),
+			'additional_addresses' 		=> $this->getAdditionalAddresses( $postId ),
 			'icon'                      => $this->getStatusIcon( $postId ),
 		);
     }
@@ -64,21 +63,27 @@ class DeathNoticesDataPost implements DataPost {
 		return ucwords( str_replace( '-', ' ', $value ) );
 	}
 
-	protected function getAdditionalField( int $postId, string $fieldName ): array {
+	protected function getAdditionalAddresses( int $postId ): array {
 		$addresses = get_field( 'additional_address', $postId );
 		
 		if ( ! $addresses || ! is_array( $addresses ) ) {
 			return array();
 		}
 
-		$values = array();
+		$result = array();
 		foreach ( $addresses as $row ) {
-			if ( ! empty( $row[ $fieldName ] ) ) {
-				$values[] = ucwords( str_replace( '-', ' ', $row[ $fieldName ] ) );
+			$town   = ! empty( $row['additional_address_town'] ) ? ucwords( str_replace( '-', ' ', $row['additional_address_town'] ) ) : '';
+			$county = ! empty( $row['additional_address_county'] ) ? ucwords( str_replace( '-', ' ', $row['additional_address_county'] ) ) : '';
+			
+			if ( $town || $county ) {
+				$result[] = array(
+					'town'   => $town,
+					'county' => $county,
+				);
 			}
 		}
 
-		return array_unique( array_filter( $values ) );
-	}    
+		return $result;
+	}     
 	
 }

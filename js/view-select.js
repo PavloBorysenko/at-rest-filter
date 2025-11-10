@@ -22,6 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
         listViewButton.addEventListener('click', () => toggleViewMode('list'));
 
         const saved = localStorage.getItem('viewMode');
-        if (saved) toggleViewMode(saved);
+        toggleViewMode(saved || 'list');
     }
 });

@@ -8,27 +8,25 @@
     </div>
     <div class="custom-pagination is--pagination">
         <button class="pagination-btn first" data-action="first" title="First page">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-               <path d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-               <path d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-            </svg>
+            
+            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M18.75 4.5L11.25 12L18.75 19.5M12.75 4.5L5.25 12L12.75 19.5' stroke='#AEAEAE' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>
+
         </button>
         <button class="pagination-btn prev" data-action="prev" title="Previous page">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-            </svg>
+            
+            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M15.75 19.5L8.25 12L15.75 4.5' stroke='#AEAEAE' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>
+
         </button>
         <div class="pagination-numbers"></div>
         <button class="pagination-btn next" data-action="next" title="Next page">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-               <path d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
+            
+            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M15.75 19.5L8.25 12L15.75 4.5' stroke='#AEAEAE' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>
+
         </button>
         <button class="pagination-btn last" data-action="last" title="Last page">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
-              <path d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
-            </svg>
+            
+            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M18.75 4.5L11.25 12L18.75 19.5M12.75 4.5L5.25 12L12.75 19.5' stroke='#AEAEAE' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>
+
         </button>
     </div>
 </div>

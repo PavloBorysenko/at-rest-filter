@@ -32,6 +32,10 @@ function toggleFavoriteMapLocation() {
                             if (row) {
                                 row.classList.toggle('is-favorite', isFav);
                             }
+                            
+                            if (typeof showGlobalAlert === 'function') {
+                                showGlobalAlert(isFav ? 'Added to favorites' : 'Removed from favorites');
+                            }
                         }
                     });
             });
@@ -85,3 +89,43 @@ function initDeleteMapLocation() {
         });
     }
 }
+
+function viewAlertsMapLocation(){
+	document.addEventListener('DOMContentLoaded', function(){
+		const urlParams = new URLSearchParams(window.location.search);
+	
+		if (localStorage.getItem("map_location_deleted") === "1") {
+			if (typeof showGlobalAlert === "function") {
+				showGlobalAlert("Map / Location successfully deleted");
+			}
+			localStorage.removeItem("map_location_deleted");
+		}
+
+		if (urlParams.get("draft") === "1") {
+			showGlobalAlert("Map / Location successfully saved");
+		}
+
+		if (urlParams.get("publish") === "1") {
+			showGlobalAlert("Map / Location has been successfully published");
+		}
+
+		if (sessionStorage.getItem("custom_alert_status") === "1") {
+			sessionStorage.removeItem("custom_alert_status");
+			setTimeout(() => {
+			  if (typeof showGlobalAlert === 'function') {
+				showGlobalAlert('Status has been successfully changed');
+			  }
+			}, 300);
+		}
+
+		if (urlParams.get("saved") === "1" || urlParams.get("draft") === "1" || urlParams.get("publish") === "1") {
+			const url = new URL(window.location);
+			url.searchParams.delete("saved");
+			url.searchParams.delete("draft");
+			url.searchParams.delete("publish");
+			window.history.replaceState({}, document.title, url.toString());
+		}
+	});
+}
+
+viewAlertsMapLocation();

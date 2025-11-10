@@ -1,6 +1,14 @@
 class TemplateRenderer {
     constructor() {
         this.helpers = {
+            ifHasAddresses: (arr) => {
+                if (Array.isArray(arr) && arr.length > 0) {
+                    return 'has-addresses';
+                } else {
+                    return '';
+                }
+            },
+            
             image: (img, size = 'thumbnail') => {
                 if (!img || !img.url) {
                     return '<div class="death-notice__placeholder"></div>';

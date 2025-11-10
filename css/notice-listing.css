@@ -4,83 +4,34 @@
     gap: 1rem;
 }
 
-.custom-pagination {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
+.breakdance .loop-table .is--pagination button.pagination-btn[data-action="last"] svg, .breakdance .loop-table .is--pagination button.pagination-btn[data-action="next"] svg {
+    transform: scale(-1, 1);
 }
 
-.pagination-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    height: 40px;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    background: white;
-    cursor: pointer;
-    transition: all 0.2s;
-    border-radius: 4px;
+.breakdance .loop-table .is--pagination button.pagination-btn:hover:not(:disabled) svg path {
+    stroke: #802F36;
 }
 
-.pagination-btn:hover:not(:disabled) {
-    background: #f5f5f5;
-    border-color: #999;
+.breakdance .loop-table .is--pagination button.pagination-btn{
+    border: none;
 }
 
-.loop-table .pagination-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed !important;
-    background: #f9f9f9;
-    border-color: #e5e5e5;
-    color: #ccc;
+.breakdance .loop-table .is--pagination button.pagination-btn[disabled] {
+    cursor: default;
 }
 
-.pagination-btn:disabled svg {
-    opacity: 0.3;
+.breakdance .loop-table .is--pagination button.pagination-btn[disabled] svg path{
+    stroke: #AEAEAE;
+}
+
+.breakdance .loop-table .is--pagination button.pagination-btn svg path{
+    stroke: #353945;
 }
 
 .pagination-numbers {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
-}
-
-.pagination-number {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    height: 40px;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    background: white;
-    cursor: pointer;
-    transition: all 0.2s;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.pagination-number:hover {
-    background: #f5f5f5;
-    border-color: #999;
-}
-
-.pagination-number.active {
-    background: #007bff;
-    color: white;
-    border-color: #007bff;
-}
-
-.pagination-dots {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    height: 40px;
-    padding: 0.5rem;
-    color: #666;
+    gap: 1rem;
 }
 
 /* Loading Overlay */
@@ -174,6 +125,11 @@ body.is--grid-view
     .funeral-homes-table__header {
     display: none;
 }
+
+.breakdance .loop-table .funeral-homes-table__row .funeral-homes-table__cell{
+        transition: none;
+    }
+
 div[data-post-type='family-notices']
     .funeral-homes-table__cell:not(:last-child) {
     text-align: left !important;
@@ -233,6 +189,8 @@ div[data-post-type='family-notices'] .death-notice__status.status--publish {
 
 body:not(.is--grid-view)
     div[data-post-type='family-notices']
+    .funeral-homes-table__row:nth-child(2n), body:not(.is--grid-view)
+    div[data-post-type='death-notices']
     .funeral-homes-table__row:nth-child(2n) {
     background: #fafafa;
 }
@@ -294,6 +252,18 @@ body.is--grid-view
     display: none !important;
 }
 
+body.is--grid-view
+    .loop-table
+    .family-notices-table .funeral-homes-table__cell.is--type{
+        padding: 4px 10px;
+        flex-direction: column;
+        justify-content: center;
+        background: #F5F5F5;
+        border-bottom: 1px solid #D9D9D9;
+        border-top-left-radius: 0.75rem;
+        border-top-right-radius: 0.75rem;
+    }
+
 div[data-post-type='family-notices']
     .funeral-homes-table__row
     .funeral-homes-table__cell.is--residence
@@ -342,12 +312,63 @@ div[data-post-type='family-notices']
     padding: 4px 8px;
 }
 
-body.is--grid-view
-    div[data-post-type='family-notices']
-    .funeral-homes-table__row {
-    padding-top: 45px;
-    overflow: hidden;
+
+
+body.is--grid-view .loop-table:not([data-post-type="death-notices"]) .funeral-homes-table__row:not(.has-extra-addresses), body.is--grid-view .loop-table:not([data-post-type="death-notices"]) .funeral-homes-table__row--inner{
+    padding: 0!important;
 }
+
+body:not(.is--grid-view)
+    .breakdance
+    .at-rest-death-notice-listing[data-post-type="death-notices"]
+    .funeral-homes-table__row.has-addresses
+    .funeral-homes-table__cell:not(.actions) {
+    flex-direction: column;
+    align-items: baseline;
+}
+
+body.is--list-view .loop-table[data-post-type="death-notices"] .funeral-homes-table__cell {
+    text-align: left !important;
+    justify-content: flex-start !important;
+}
+
+body.is--grid-view .loop-table[data-post-type="family-notices"] .funeral-homes-table__cell.death-notice__link{
+    padding: 1rem!important;
+}
+
+body.is--grid-view .loop-table[data-post-type="family-notices"] .funeral-homes-table__row .funeral-homes-table__cell.is--type span {
+    font-size: 18px;
+    color: #858B96;
+}
+
+body.is--grid-view .loop-table[data-post-type="family-notices"] .funeral-homes-table__cell.is--residence{
+    order: 2;
+}
+
+
+body.is--grid-view .loop-table[data-post-type="death-notices"] .funeral-homes-table__cell:nth-child(4) {
+    justify-content: flex-start;
+}
+
+body.is--list-view .loop-table[data-post-type="death-notices"] .funeral-homes-table__cell:nth-child(1){
+    width: 38%;
+}
+
+body.is--list-view .loop-table[data-post-type="death-notices"] .funeral-homes-table__cell:nth-child(2){
+    width: 22%;
+}
+
+body.is--list-view .loop-table[data-post-type="death-notices"] .funeral-homes-table__cell:nth-child(3){
+    width: 21%;
+}
+
+body.is--list-view .loop-table[data-post-type="death-notices"] .funeral-homes-table__cell:nth-child(4){
+    width: 19%;
+	padding: 1rem;
+}
+
+
+
 
 body.is--grid-view
     div[data-post-type='family-notices']
@@ -468,6 +489,7 @@ body.is--grid-view
         color: #858b96 !important;
     }
 }
+
 
 /* Type Filter */
 .at-rest-type-filter-family-notices {

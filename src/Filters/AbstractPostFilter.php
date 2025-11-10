@@ -85,6 +85,10 @@ abstract class AbstractPostFilter
 			: 10;
 
 		$orderby = sanitize_text_field( $params['orderby'] ?? 'date' );
+		
+		if ( $orderby === 'status' ) {
+			$orderby = 'post_status';
+		}
 
 		$args = array(
 			'post_type'      => $this->postType,
@@ -232,6 +236,7 @@ abstract class AbstractPostFilter
 	}
 
 	public function posts_orderby( $orderby, $query ) {
+	    global $wpdb;
 		if ($query->get('orderby') === 'post_status') {
 			$order = strtoupper($query->get('order')) === 'DESC' ? 'DESC' : 'ASC';
 			$orderby = "{$wpdb->posts}.post_status {$order}";

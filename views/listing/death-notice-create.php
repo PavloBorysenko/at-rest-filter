@@ -2,7 +2,6 @@
     data-post-type="death-notices"
     data-type="create"
     data-user-id="<?php echo esc_attr($user_id); ?>">
-    <?php $template_helper->drawSpinner(); ?>
     <div class="bulk-actions" style="display: none; margin-bottom: 1.875rem;">
         <button type="button" class="bulk-delete-btn">Delete selected</button>
         <select class="bulk-status-select">

@@ -66,7 +66,7 @@ class MainForm {
     private function setDays( int$days) : array {
         if ($days > 0) {
             $today = current_time('d.m.Y');
-            $from_date = date('d.m.Y', strtotime("-{$days} days", strtotime($today)));
+            $from_date = date('d.m.Y', strtotime('-' . ($days - 1) . 'days', strtotime($today)));
             $to_date = $today;
 
             return [

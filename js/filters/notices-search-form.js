@@ -398,8 +398,8 @@
 
         toggleClearAllBtn();
     };
-
-    applyPrefilteredData(prefilteredData, urlManager);
+	
+	applyPrefilteredData(prefilteredData, urlManager);
 
     initCountyChoices();
     initTownChoices();

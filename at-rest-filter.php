@@ -7,7 +7,7 @@
  */
 
 
-define('AT_REST_FILTER_CACHE_ACTIVE', true);
+define('AT_REST_FILTER_CACHE_ACTIVE', false);
 define('AT_REST_FILTER_DIR', __DIR__);
 define('AT_REST_FILTER_URL', plugin_dir_url(__FILE__));
 

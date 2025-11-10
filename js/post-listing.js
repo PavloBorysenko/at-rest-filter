@@ -22,16 +22,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const sortManager = new SortManager(urlManager);
 
     const showLoading = () => {
-        const overlay = document.querySelector('.at-rest-loading-overlay');
-        if (overlay) {
-            overlay.style.display = 'flex';
+        const preloader = document.querySelector('.is--preloader');
+        if (preloader) {
+            preloader.classList.add('visible');
         }
     };
 
     const hideLoading = () => {
-        const overlay = document.querySelector('.at-rest-loading-overlay');
-        if (overlay) {
-            overlay.style.display = 'none';
+        const preloader = document.querySelector('.is--preloader');
+        if (preloader) {
+            preloader.classList.remove('visible');
         }
     };
 
@@ -185,9 +185,6 @@ document.addEventListener('DOMContentLoaded', function () {
     perPageManager.init();
     sortManager.init();
 
-    setTimeout(() => {
-        //fetchPosts(postType);
-    }, 100);
     fetchPosts(postType);
 
     window.addEventListener('filterUpdate', () => {
