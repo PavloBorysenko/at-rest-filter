@@ -36,8 +36,8 @@ data-post-type="map-location">
             </div>
             <div class="funeral-homes-table__cell">
                 <button class="sort-button" 
-                    data-sort="status" 
-                    data-state="<?php echo $orderby === 'status' ? $order : 'default'; ?>">
+                    data-sort="post_status" 
+                    data-state="<?php echo $orderby === 'post_status' ? $order : 'default'; ?>">
                     Status
                 </button>
             </div>

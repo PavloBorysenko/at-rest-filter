@@ -46,16 +46,19 @@ abstract class AbstractPostFilter
 		$this->setDataPost( $this->getDataPost( $params ) );
 		$this->setQueryBuilder( $this->getPostQueryBuilder( $params ) );
 
-		$cached = $this->cache->get( $params );
-		if ( $cached !== false ) {
-			return $cached;
-		}
 
 		$queryArgs = $this->buildQueryArgs( $params );
-		$query     = new WP_Query( $queryArgs );
+
+		$cached = $this->cache->get( $queryArgs );
+		if ( $cached !== false ) {
+			$query  = $cached;
+		} else {
+			$query     = new WP_Query( $queryArgs );
+			$this->cache->set( $queryArgs, $query, $this->cacheExpiration );
+		}
+		
 		$result    = $this->formatResponse( $query, $params );
 
-		$this->cache->set( $params, $result, $this->cacheExpiration );
 
 		return $result;
 	}
@@ -86,10 +89,6 @@ abstract class AbstractPostFilter
 
 		$orderby = sanitize_text_field( $params['orderby'] ?? 'date' );
 		
-		if ( $orderby === 'status' ) {
-			$orderby = 'post_status';
-		}
-
 		$args = array(
 			'post_type'      => $this->postType,
 			'post_status'    => 'publish',

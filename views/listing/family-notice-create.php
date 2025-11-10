@@ -98,15 +98,15 @@
         
         <div class="funeral-homes-table__cell column-county">
             <div class="list-item">{{empty county}}</div>
-            {{#each additional_address_county}}
-            <div class="list-item">{{empty this}}</div>
+            {{#each additional_addresses}}
+            <div class="list-item">{{empty this.county}}</div>
             {{/each}}
         </div>
         
         <div class="funeral-homes-table__cell column-town">
             <div class="list-item">{{empty town}}</div>
-            {{#each additional_address_town}}
-            <div class="list-item">{{empty this}}</div>
+            {{#each additional_addresses}}
+            <div class="list-item">{{empty this.town}}</div>
             {{/each}}
         </div>
 
