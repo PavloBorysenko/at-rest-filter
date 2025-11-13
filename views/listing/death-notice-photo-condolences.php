@@ -3,6 +3,7 @@
     data-type="photo-condolences"
     data-user-id="<?php echo $user_id; ?>"
 >
+    <?php $template_helper->drawSpinner(); ?>
     <div class="funeral-homes-table family-notices-table facetwp-facet facetwp-type-sort">
         <div class="funeral-homes-table__header facetwp-sort-radio">
     		<div class="funeral-homes-table__cell">

@@ -22,14 +22,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const sortManager = new SortManager(urlManager);
 
     const showLoading = () => {
-        const preloader = document.querySelector('.is--preloader');
+        const preloader = document.querySelector('.is--table-preloader');
         if (preloader) {
             preloader.classList.add('visible');
         }
     };
 
     const hideLoading = () => {
-        const preloader = document.querySelector('.is--preloader');
+        const preloader = document.querySelector('.is--table-preloader');
         if (preloader) {
             preloader.classList.remove('visible');
         }

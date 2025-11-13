@@ -2,6 +2,7 @@
     data-post-type="family-notices"
     data-type="create"
     data-user-id="<?php echo esc_attr($user_id); ?>">
+    <?php $template_helper->drawSpinner(); ?>
     <div class="bulk-actions" style="display: none; margin-bottom: 1.875rem;">
         <button type="button" class="bulk-delete-btn">Delete selected</button>
     </div>
@@ -98,15 +99,15 @@
         
         <div class="funeral-homes-table__cell column-county">
             <div class="list-item">{{empty county}}</div>
-            {{#each additional_addresses}}
-            <div class="list-item">{{empty this.county}}</div>
+            {{#each additional_address_county}}
+            <div class="list-item">{{empty this}}</div>
             {{/each}}
         </div>
         
         <div class="funeral-homes-table__cell column-town">
             <div class="list-item">{{empty town}}</div>
-            {{#each additional_addresses}}
-            <div class="list-item">{{empty this.town}}</div>
+            {{#each additional_address_town}}
+            <div class="list-item">{{empty this}}</div>
             {{/each}}
         </div>
 

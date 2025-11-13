@@ -1,4 +1,5 @@
 <div class="at-rest-post-listing at-rest-death-notice-listing loop-table sort" data-post-type="death-notices">
+    <?php $template_helper->drawSpinner(); ?>
     <div class="funeral-homes-table facetwp-facet facetwp-facet-sort_table facetwp-type-sort family-notices-table">
         <div class="funeral-homes-table__header facetwp-sort-radio">
             <div class="funeral-homes-table__cell column-name">

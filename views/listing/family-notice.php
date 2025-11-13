@@ -70,6 +70,7 @@
             <div class="list-item">{{empty this.town}}</div>
             {{/each}}
         </div>
+        
         <div class="funeral-homes-table__cell is--type">
             <span>{{notice_type}}</span>
         </div>       

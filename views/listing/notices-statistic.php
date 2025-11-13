@@ -3,6 +3,7 @@
     data-type="<?php echo $type; ?>"
     data-user-id="<?php echo $user_id; ?>"
 >
+    <?php $template_helper->drawSpinner(); ?>
     <div id="count-text-container"></div>
     <div class="funeral-homes-table facetwp-facet facetwp-facet-sort_table facetwp-type-sort family-notices-table">
         <div class="funeral-homes-table__header facetwp-sort-radio">

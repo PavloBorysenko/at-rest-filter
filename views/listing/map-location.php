@@ -2,7 +2,7 @@
 data-user-id="<?php echo esc_attr($user_id); ?>" 
 data-type=""
 data-post-type="map-location">
-
+    <?php $template_helper->drawSpinner(); ?>
     <div class="funeral-homes-table facetwp-facet facetwp-facet-sort_table facetwp-type-sort family-notices-table">
         <div class="funeral-homes-table__header facetwp-sort-radio">
             <div class="funeral-homes-table__cell"></div>
@@ -36,8 +36,8 @@ data-post-type="map-location">
             </div>
             <div class="funeral-homes-table__cell">
                 <button class="sort-button" 
-                    data-sort="post_status" 
-                    data-state="<?php echo $orderby === 'post_status' ? $order : 'default'; ?>">
+                    data-sort="status" 
+                    data-state="<?php echo $orderby === 'status' ? $order : 'default'; ?>">
                     Status
                 </button>
             </div>
