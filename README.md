@@ -15,6 +15,8 @@ Main search form for death/family notices.
 
 -   `hide_items` - '' (default). Filter elements to hide. Use comma to separate them: firstname,secondname,nee,county,town,from,to
 -   `days` - 0 (default). Prefilter by last n days
+-   `search_btn_text` - 'Search' (default). Text of the search btn.
+-   `clear_btn_text` - 'Clear all'(default). Text of the reset btn.
 
 **`[at_rest_map_filter_form]`**
 Search form for map locations (denomination, county, church name).
@@ -126,6 +128,7 @@ Toggle between list and grid view.
 -   funeral-director/family-notices/ - `[at_rest_filter post_type="family_notice"][at_rest_type_filter_family_notices][at_rest_post_status_filter][at_rest_family_notice_create_listing]`
 -   funeral-director/photo-and-condolence/ - `[at_rest_filter hide_items='county,town'][at_rest_death_notice_photo_condolences]`
 -   funeral-director/statistic/ - `[at_rest_notices_statistic_search][at_rest_notices_statistic_listing]`
+-   profile-family-notices/create/ - `[at_rest_filter search_btn_text="search death notice" ] [at_rest_death_notice_listing_in_family]`
 
 ## Troubleshooting
 

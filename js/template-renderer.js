@@ -8,14 +8,14 @@ class TemplateRenderer {
                     return '';
                 }
             },
-            
+
             image: (img, size = 'thumbnail') => {
                 if (!img || !img.url) {
                     return '<div class="death-notice__placeholder"></div>';
                 }
                 const src = img[size] || img.url || '';
                 const alt = img.alt || '';
-                return `<img src="${src}" alt="${alt}" class="death-notice__image" />`;
+                return `<img src="${src}" alt="${alt}" class="death-notice__image is--image" />`;
             },
 
             icon: (icon) => {

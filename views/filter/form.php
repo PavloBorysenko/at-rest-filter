@@ -114,12 +114,12 @@
     </form>
     
     <div class="filters__control">
-        <button type="button" id="search-button"><span class="icon"></span> Search</button>
+        <button type="button" id="search-button"><span class="icon"></span><?php echo esc_html($atts['search_btn_text']); ?></button>
         <button type="button" 
                 id="clear-button" 
                 class="opacity-hover" 
                 style="display:none;">
-            <span class="icon"></span> Clear All
+            <span class="icon"></span><?php echo esc_html($atts['clear_btn_text']); ?>
         </button>
     </div>
     <script id="at-rest-county-data" type="application/json">

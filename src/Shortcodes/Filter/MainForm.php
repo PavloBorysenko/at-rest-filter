@@ -37,6 +37,8 @@ class MainForm {
         $atts = shortcode_atts([
             'post_type' => 'death-notices',
             'hide_items' => '',
+            'search_btn_text' => 'Search',
+            'clear_btn_text' => 'Clear All',
             'days' => 0,
         ], $atts);
         $prefiltered_data = $this->getPrefilteredData($atts);
